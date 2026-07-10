@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lita-lab 頭皮コンディション見本表</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@1&family=Noto+Serif+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body { margin:0; background:#f4eef0; font-family:"Noto Serif JP",serif; color:#3f3b38; padding-bottom:70px; }
+  .wrap { max-width:900px; margin:0 auto; padding:20px 14px; }
+  .head { text-align:center; border-bottom:2px solid #C8848C; padding-bottom:12px; margin-bottom:6px; }
+  .logo { font-family:"DM Serif Display",serif; font-style:italic; font-size:26px; color:#C8848C; }
+  .title { font-size:17px; font-weight:700; letter-spacing:2px; }
+  .lead { font-size:12.5px; color:#8a7f83; text-align:center; line-height:1.7; margin:10px 0 18px; }
+
+  .item { background:#fff; border:1px solid #ecdfe3; border-radius:12px; padding:14px 12px 10px; margin-bottom:16px; }
+  .item h2 { font-size:16px; color:#b06b78; margin:0 0 2px; }
+  .item .sub { font-size:11.5px; color:#9a8f93; margin:0 0 10px; }
+  .cells { display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; }
+  .cell { flex:0 0 158px; border:1px solid #f0e2e6; border-radius:10px; overflow:hidden; background:#fdfafb; }
+  .cell.best { border-color:#C8848C; }
+  .cell .lv { display:flex; align-items:center; justify-content:space-between; padding:5px 8px; background:#faf3f5; }
+  .cell.best .lv { background:#C8848C; }
+  .cell .lv .n { font-weight:700; font-size:13px; color:#b06b78; }
+  .cell.best .lv .n { color:#fff; }
+  .cell .lv .tag { font-size:10px; color:#8a7f83; }
+  .cell.best .lv .tag { color:#fbeef1; }
+  .ph { position:relative; width:100%; aspect-ratio:1; background:#fff; cursor:pointer; }
+  .ph svg, .ph img { width:100%; height:100%; display:block; object-fit:cover; }
+  .ph .hint { position:absolute; right:4px; bottom:4px; font-size:9px; color:#b3a9ad; background:rgba(255,255,255,.85); border-radius:4px; padding:1px 5px; }
+  .ph .del { position:absolute; right:4px; top:4px; font-size:11px; border:0; border-radius:4px; background:rgba(255,255,255,.9); color:#c8848c; cursor:pointer; display:none; }
+  .ph.hasphoto .del { display:block; }
+  .ph.hasphoto .hint { display:none; }
+  .cell .tx { font-size:11.5px; line-height:1.6; padding:8px 9px 10px; color:#5a5350; }
+
+  .liferow { display:flex; flex-wrap:wrap; gap:8px; }
+  .lifechip { flex:1 1 150px; background:#fdfafb; border:1px solid #f0e2e6; border-radius:10px; padding:9px 10px; font-size:12px; line-height:1.6; }
+  .lifechip b { color:#b06b78; }
+
+  .note { background:#fff; border:1px solid #ecdfe3; border-radius:12px; padding:12px 14px; font-size:11.5px; color:#8a7f83; line-height:1.8; }
+  .note b { color:#b06b78; }
+
+  .toolbar { position:fixed; bottom:0; left:0; right:0; background:#3a3633; color:#f6eef0; padding:10px 16px; display:flex; gap:12px; align-items:center; justify-content:center; flex-wrap:wrap; font-size:12.5px; z-index:10; }
+  .toolbar button { font-family:inherit; font-size:13px; background:#C8848C; color:#fff; border:0; padding:9px 18px; border-radius:6px; cursor:pointer; }
+  .toolbar .tnote { color:#bcaeb2; }
+
+  @media print {
+    body { background:#fff; padding:0; }
+    .toolbar, .ph .hint, .ph .del { display:none !important; }
+    .item { break-inside:avoid; }
+    .cells { overflow:visible; }
+    .cell { flex:1 1 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="logo">Lita-lab</div>
+    <div class="title">頭皮コンディション 見本表</div>
+  </div>
+  <p class="lead">マイクロスコープで見た頭皮の状態を、5つの段階でご覧いただけます。<br>
+  「今どのあたりか」「これからどこを目指すか」を一緒に確認するための表です。</p>
+
+  <div id="items"></div>
+
+  <div class="item">
+    <h2>7. 生活リズム</h2>
+    <p class="sub">カウンセリングでお伺いする5つのポイント。当てはまる数がそのまま点数の目安になります。</p>
+    <div class="liferow">
+      <div class="lifechip"><b>①睡眠</b><br>6時間以上とれている</div>
+      <div class="lifechip"><b>②食事</b><br>タンパク質を意識できている</div>
+      <div class="lifechip"><b>③ストレス</b><br>強いストレスが続いていない</div>
+      <div class="lifechip"><b>④紫外線・熱</b><br>帽子・ドライヤーの距離など配慮あり</div>
+      <div class="lifechip"><b>⑤洗い方</b><br>爪を立てず、すすぎまで丁寧</div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>この表について</b><br>
+    ・基準は日本毛髪科学協会の公開データ（毛の太さ 日本人平均0.07〜0.08mm、理想は1つの毛穴から2〜3本 など）と、頭皮専門クリニックの公開判定をもとに、毛髪診断士が監修しています。<br>
+    ・イラストはイメージです。各マスをタップすると、当サロンのマイクロスコープ実画像（掲載許可をいただいたもの）に差し替えられます。<br>
+    ・本表は美容上のお手入れの目安です。炎症など気になる症状がある場合は医療機関にご相談ください。
+  </div>
+</div>
+
+<div class="toolbar">
+  <span class="tnote">マスをタップ→実写真に差し替え（自動保存）</span>
+  <button onclick="window.print()">印刷・PDF保存</button>
+</div>
+
+<script>
+// ============ データ ============
+var ITEMS = [
+  { id:"color", name:"1. 頭皮の色つや",
+    sub:"健やかな頭皮は、毛根が透けてうっすら青白く見えます。",
+    tx:[
+      "青白く透明感がある、理想的な状態",
+      "おおむね青白く、部分的に軽いくすみ",
+      "全体に黄ばみ。皮脂の酸化・生まれ変わりの乱れのサイン",
+      "部分的に赤み。血行や刺激のケアをしたい状態",
+      "広い範囲に赤み。いたわりのケアの始めどき" ] },
+  { id:"pore", name:"2. 毛穴の状態",
+    sub:"理想は、毛穴の輪郭がくっきり見えて、毛が束になって立ち上がっている状態。",
+    tx:[
+      "輪郭くっきり。詰まりがなく毛が元気に立ち上がる",
+      "うっすら皮脂があるが、立ち上がりは良い",
+      "毛穴のまわりに皮脂・角質の付着が目立つ",
+      "半分ふさがって見える毛穴がところどころに",
+      "多くの毛穴がふさがり、毛が出にくい状態" ] },
+  { id:"sebum", name:"3. 皮脂バランス",
+    sub:"皮脂は頭皮を守る大切なもの。多すぎず少なすぎずが理想です。",
+    tx:[
+      "適度なつや。ベタつきもカサつきもなし",
+      "前髪の生え際やつむじなど、部分的に皮脂多め",
+      "毛穴に水たまりのような皮脂が見える",
+      "広い範囲にベタつき。脂っぽいフケが出ることも",
+      "固まった皮脂が目立つ。しっかりリセットしたい状態" ] },
+  { id:"dry", name:"4. うるおい",
+    sub:"乾燥が進むと、白く細かいフケやかゆみのもとになります。",
+    tx:[
+      "しっとりなめらか。フケ・カサつきなし",
+      "やや乾燥ぎみ。洗髪後につっぱり感",
+      "毛穴のまわりに乾いた角質がちらほら",
+      "白く細かいフケがパラパラと出やすい",
+      "白い角質のかたまりが広がっている状態" ] },
+  { id:"hari", name:"5. ハリ・コシ（毛の太さ）",
+    sub:"日本人女性の平均は約0.07〜0.08mm。年齢とともに細くなりやすい部分です。",
+    tx:[
+      "全体にしっかりした太さ。根元から立ち上がる",
+      "平均的な太さ。気になる細さはなし",
+      "ところどころに細い毛・短い毛が混じる",
+      "細い毛が目立ち、トップがつぶれやすい",
+      "細い毛が多く、育てるケアの始めどき" ] },
+  { id:"vol", name:"6. ボリューム（毛の密度）",
+    sub:"理想は、1つの毛穴から2〜3本の毛が生えている状態です。",
+    tx:[
+      "1穴2〜3本が多く、地肌がほぼ見えない",
+      "1穴2本が中心。分け目は気にならない",
+      "1穴1〜2本が混在。分け目がやや広く感じる",
+      "1穴1本が目立ち、分け目・つむじが透けやすい",
+      "毛の生えていない毛穴も。じっくり育てたい状態" ] },
+];
+
+// ============ イラスト生成（レベル1=最良〜5=ケア時） ============
+function svgWrap(inner, bg){
+  return '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' +
+    '<rect width="100" height="100" fill="'+bg+'"/>' + inner + '</svg>';
+}
+function hairs(n, w, sway, cx){
+  var out = "", gap = 6;
+  var start = cx - (n-1)*gap/2;
+  for (var i=0;i<n;i++){
+    var x = start + i*gap, s = (i%2? sway : -sway);
+    out += '<path d="M'+x+' 78 C '+(x+s)+' 50, '+(x-s)+' 30, '+(x+s*1.5)+' 8" stroke="#6b5a52" stroke-width="'+w+'" fill="none" stroke-linecap="round"/>';
+  }
+  return out;
+}
+var SCALPS = ["#eef4f6","#f3f1e9","#f2e9c9","#f0d9c7","#eec4b8"]; // 青白→黄→赤
+function illColor(lv){
+  var extra = "";
+  if (lv>=4){ extra += '<circle cx="30" cy="40" r="14" fill="#e59a8d" opacity="'+(lv===4?0.45:0.6)+'"/><circle cx="68" cy="62" r="10" fill="#e59a8d" opacity="0.35"/>'; }
+  if (lv===5){ extra += '<circle cx="60" cy="30" r="16" fill="#df8878" opacity="0.55"/>'; }
+  if (lv===3){ extra += '<circle cx="55" cy="45" r="22" fill="#e8d79a" opacity="0.5"/>'; }
+  return svgWrap('<circle cx="26" cy="80" r="2.4" fill="#d8c9c2"/><circle cx="52" cy="84" r="2.4" fill="#d8c9c2"/><circle cx="76" cy="78" r="2.4" fill="#d8c9c2"/>' + extra + hairs(3,2.2,4,50), SCALPS[lv-1]);
+}
+function illPore(lv){
+  var bg = SCALPS[Math.min(lv,3)-1];
+  var pore = '<circle cx="50" cy="72" r="13" fill="#e9dbd4" stroke="#cbb6ab" stroke-width="1.5"/>';
+  var n = [3,3,2,1,1][lv-1];
+  var blob = "";
+  if (lv===2) blob = '<circle cx="58" cy="76" r="4" fill="#e6c86e" opacity="0.8"/>';
+  if (lv===3) blob = '<path d="M38 70 a12 12 0 0 0 12 14 a 12 12 0 0 0 8-3 z" fill="#e0b95c" opacity="0.85"/>';
+  if (lv===4) blob = '<path d="M37 72 a13 13 0 0 0 24 5 z" fill="#d9ad4a"/><circle cx="62" cy="64" r="4" fill="#e0b95c"/>';
+  if (lv===5) blob = '<circle cx="50" cy="72" r="12" fill="#d3a03f"/><circle cx="36" cy="60" r="4" fill="#d9ad4a"/><circle cx="66" cy="62" r="4" fill="#d9ad4a"/>';
+  var h = (lv===5) ? hairs(1,1.6,3,44) : hairs(n, 2.2 - lv*0.12, 4, 50);
+  return svgWrap(pore + h + blob, bg);
+}
+function illSebum(lv){
+  var bg = SCALPS[lv===1?0:1];
+  var d = "";
+  if (lv>=2) d += '<circle cx="30" cy="60" r="4" fill="#eecf7d" opacity="0.9"/>';
+  if (lv>=3) d += '<ellipse cx="52" cy="74" rx="9" ry="6" fill="#ecc766"/><circle cx="70" cy="55" r="4" fill="#eecf7d"/>';
+  if (lv>=4) d += '<ellipse cx="30" cy="80" rx="8" ry="5" fill="#e6bd55"/><circle cx="76" cy="76" r="5" fill="#ecc766"/><rect x="0" y="0" width="100" height="100" fill="#f2df9e" opacity="0.25"/>';
+  if (lv===5) d += '<circle cx="46" cy="52" r="6" fill="#c9932f"/><circle cx="64" cy="70" r="7" fill="#bd8826"/><circle cx="28" cy="44" r="5" fill="#c9932f"/>';
+  var shine = (lv===1) ? '<path d="M20 30 q6 -8 14 -9" stroke="#fff" stroke-width="2.5" fill="none" opacity="0.9" stroke-linecap="round"/>' : "";
+  return svgWrap(hairs(3,2.1,4,50) + d + shine, bg);
+}
+function illDry(lv){
+  var bg = [SCALPS[0], "#f2efe9", "#f2eee6", "#f1ece2", "#efe9dd"][lv-1];
+  var f = "";
+  function flake(x,y,s,o){ return '<rect x="'+x+'" y="'+y+'" width="'+s+'" height="'+(s*0.8)+'" rx="1.5" fill="#fbf7ef" stroke="#ded3c2" stroke-width="0.8" opacity="'+o+'" transform="rotate('+((x*7)%40-20)+' '+x+' '+y+')"/>'; }
+  if (lv>=2){ f += flake(28,62,5,0.9) + flake(70,50,4,0.8); }
+  if (lv>=3){ f += flake(46,74,6,0.95) + flake(60,66,5,0.9) + flake(24,42,4,0.8); }
+  if (lv>=4){ f += flake(36,52,7,1) + flake(66,78,7,1) + flake(52,38,5,0.9) + flake(78,62,6,0.95); }
+  if (lv===5){ f += '<path d="M30 66 q10 -8 22 -2 q10 6 20 0 l0 14 q-20 8 -42 0 z" fill="#f6efe2" stroke="#d8cbb5" stroke-width="1"/>' + flake(40,40,8,1) + flake(62,48,7,1); }
+  return svgWrap(hairs(3,2.0,4,50) + f, bg);
+}
+function illHari(lv){
+  var ws = [[2.6,2.6,2.4],[2.3,2.2,2.2],[2.3,1.5,2.2],[1.6,1.3,2.0],[1.2,1.0,1.3]][lv-1];
+  var sway = 3 + lv*1.5;
+  var out = "", xs=[38,50,62];
+  for (var i=0;i<3;i++){
+    var x=xs[i], s=(i%2? sway:-sway);
+    out += '<path d="M'+x+' 82 C '+(x+s)+' 55, '+(x-s)+' 32, '+(x+s*1.6)+' 10" stroke="#6b5a52" stroke-width="'+ws[i]+'" fill="none" stroke-linecap="round"/>';
+  }
+  return svgWrap('<circle cx="38" cy="82" r="2.4" fill="#d8c9c2"/><circle cx="50" cy="82" r="2.4" fill="#d8c9c2"/><circle cx="62" cy="82" r="2.4" fill="#d8c9c2"/>'+out, SCALPS[0]);
+}
+function illVol(lv){
+  var groups = [[3,3,2],[2,2,2],[2,1,1],[1,1,1],[1,0,1]][lv-1];
+  var out = "", xs=[26,50,74];
+  for (var g=0; g<3; g++){
+    out += '<circle cx="'+xs[g]+'" cy="80" r="5" fill="#e9dbd4" stroke="#cbb6ab" stroke-width="1"/>';
+    if (groups[g]>0) out += hairs(groups[g], 1.9, 3.5, xs[g]);
+  }
+  return svgWrap(out, SCALPS[lv<=2?0:1]);
+}
+var ILL = { color:illColor, pore:illPore, sebum:illSebum, dry:illDry, hari:illHari, vol:illVol };
+var LVTAG = ["とても良い","良い","ふつう","ケアしたい","しっかりケア"];
+
+// ============ 描画 ============
+var KEY = "litalab_scalp_chart_v1";
+var photos = {};
+try { photos = JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){}
+
+var root = document.getElementById("items");
+ITEMS.forEach(function(it){
+  var sec = document.createElement("div"); sec.className="item";
+  sec.innerHTML = '<h2>'+it.name+'</h2><p class="sub">'+it.sub+'</p>';
+  var cells = document.createElement("div"); cells.className="cells";
+  for (var lv=1; lv<=5; lv++){
+    (function(lv){
+      var score = 6-lv; // 表示は5点→1点
+      var cell = document.createElement("div"); cell.className = "cell" + (lv===1?" best":"");
+      cell.innerHTML = '<div class="lv"><span class="n">'+score+'点</span><span class="tag">'+LVTAG[lv-1]+'</span></div>';
+      var ph = document.createElement("div"); ph.className="ph"; ph.id = "ph-"+it.id+"-"+lv;
+      var key = it.id+"-"+lv;
+      if (photos[key]) { ph.innerHTML = '<img src="'+photos[key]+'">'; ph.classList.add("hasphoto"); }
+      else { ph.innerHTML = ILL[it.id](lv); }
+      ph.innerHTML += '<span class="hint">タップで実写真</span><button class="del" title="写真を外す">×</button>';
+      ph.querySelector(".del").onclick = function(ev){
+        ev.stopPropagation();
+        delete photos[key]; localStorage.setItem(KEY, JSON.stringify(photos));
+        ph.classList.remove("hasphoto");
+        ph.innerHTML = ILL[it.id](lv) + '<span class="hint">タップで実写真</span><button class="del">×</button>';
+        bindDel(ph, it, lv, key);
+      };
+      ph.onclick = function(){ pickPhoto(it, lv, key, ph); };
+      cell.appendChild(ph);
+      var tx = document.createElement("div"); tx.className="tx"; tx.textContent = it.tx[lv-1];
+      cell.appendChild(tx);
+      cells.appendChild(cell);
+    })(lv);
+  }
+  sec.appendChild(cells);
+  root.appendChild(sec);
+});
+
+function bindDel(ph, it, lv, key){
+  ph.querySelector(".del").onclick = function(ev){
+    ev.stopPropagation();
+    delete photos[key]; localStorage.setItem(KEY, JSON.stringify(photos));
+    ph.classList.remove("hasphoto");
+    ph.innerHTML = ILL[it.id](lv) + '<span class="hint">タップで実写真</span><button class="del">×</button>';
+    bindDel(ph, it, lv, key);
+  };
+}
+
+function pickPhoto(it, lv, key, ph){
+  var input = document.createElement("input");
+  input.type="file"; input.accept="image/*,.heic,.heif";
+  input.onchange = function(){
+    var f = input.files[0]; if(!f) return;
+    var url = URL.createObjectURL(f);
+    var img = new Image();
+    img.onload = function(){
+      var cv = document.createElement("canvas");
+      var scale = Math.min(1, 500/Math.max(img.width, img.height));
+      cv.width = img.width*scale; cv.height = img.height*scale;
+      cv.getContext("2d").drawImage(img,0,0,cv.width,cv.height);
+      var data = cv.toDataURL("image/jpeg",0.82);
+      photos[key]=data;
+      try { localStorage.setItem(KEY, JSON.stringify(photos)); }
+      catch(e){ alert("保存容量がいっぱいです。他のマスの写真を減らしてください。"); return; }
+      ph.classList.add("hasphoto");
+      ph.innerHTML = '<img src="'+data+'"><span class="hint">タップで実写真</span><button class="del">×</button>';
+      bindDel(ph, it, lv, key);
+      URL.revokeObjectURL(url);
+    };
+    img.onerror = function(){ alert("この写真は読み込めませんでした。"); };
+    img.src = url;
+  };
+  input.click();
+}
+</script>
+</body>
+</html>

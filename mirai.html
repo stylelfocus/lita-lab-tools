@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>頭皮と髪の未来診断 | Lita-lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink:        #c87a96;
+  --pink-light:  #f0d5e2;
+  --pink-pale:   #fdf6f9;
+  --pink-deep:   #a85a78;
+  --grey-light:  #f5f1ef;
+  --grey-border: #e8e2e0;
+  --text:        #3d3535;
+  --text-light:  #7a6e6e;
+  --white:       #ffffff;
+  --bg:          #fdfbfa;
+  --radius:      12px;
+  --radius-lg:   20px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic Pro', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+/* ── SCREENS ── */
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding: 28px 24px 56px;
+  flex-direction: column;
+  animation: fadeUp 0.35s ease;
+}
+.screen.active { display: flex; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── LOGO ── */
+.logo {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: var(--pink);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* ── INTRO ── */
+#screen-intro {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.intro-badge {
+  display: inline-block;
+  background: var(--pink-light);
+  color: var(--pink-deep);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  padding: 5px 16px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+
+.intro-title {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 6px;
+  letter-spacing: 0.05em;
+}
+
+.intro-title small {
+  display: block;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-light);
+  letter-spacing: 0.12em;
+  margin-bottom: 10px;
+}
+
+.intro-divider {
+  width: 36px;
+  height: 1px;
+  background: var(--pink-light);
+  margin: 22px auto;
+}
+
+.intro-desc {
+  font-size: 15px;
+  color: var(--text-light);
+  line-height: 1.9;
+  margin-bottom: 32px;
+}
+
+.intro-stats {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 44px;
+}
+
+.stat-num {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--pink);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--text-light);
+  margin-top: 5px;
+}
+
+/* ── BUTTONS ── */
+.btn-primary {
+  display: block;
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, var(--pink) 0%, var(--pink-deep) 100%);
+  color: var(--white);
+  border: none;
+  border-radius: 50px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(200,122,150,0.32);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn-primary:active { transform: scale(0.98); }
+
+.btn-line {
+  display: block;
+  width: 100%;
+  padding: 18px;
+  background: #06C755;
+  color: var(--white);
+  border: none;
+  border-radius: 50px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.btn-line:active { opacity: 0.85; }
+
+.btn-sub {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background: var(--white);
+  color: var(--text);
+  border: 1.5px solid var(--grey-border);
+  border-radius: 50px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+  letter-spacing: 0.05em;
+}
+
+.btn-sub:active { background: var(--pink-pale); border-color: var(--pink-light); }
+
+/* ── QUESTION ── */
+#screen-question { padding-top: 20px; }
+
+.q-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 6px 0;
+  font-family: 'Noto Sans JP', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.q-counter {
+  font-size: 13px;
+  color: var(--text-light);
+  letter-spacing: 0.05em;
+}
+
+.q-counter strong {
+  font-size: 20px;
+  color: var(--pink);
+  font-weight: 500;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 3px;
+  background: var(--pink-light);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pink) 0%, var(--pink-deep) 100%);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.q-category {
+  font-size: 11px;
+  color: var(--pink);
+  letter-spacing: 0.15em;
+  margin-bottom: 14px;
+}
+
+.q-text {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 21px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.65;
+  margin-bottom: 32px;
+  min-height: 72px;
+}
+
+.answers { display: flex; flex-direction: column; gap: 12px; }
+
+.answer-btn {
+  padding: 18px 20px;
+  background: var(--white);
+  border: 1.5px solid var(--grey-border);
+  border-radius: var(--radius);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 17px;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: border-color 0.15s, background 0.15s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.answer-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--grey-border);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.answer-btn.selected {
+  border-color: var(--pink);
+  background: var(--pink-pale);
+}
+
+.answer-btn.selected .answer-dot { background: var(--pink); }
+
+/* ── LOADING ── */
+#screen-loading {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 28px;
+}
+
+.loading-dots { display: flex; gap: 10px; justify-content: center; }
+
+.loading-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--pink-light);
+  animation: bounce 1.2s ease-in-out infinite;
+}
+
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { background: var(--pink-light); transform: scale(1); }
+  40%           { background: var(--pink);       transform: scale(1.35); }
+}
+
+.loading-text {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 16px;
+  color: var(--text-light);
+  letter-spacing: 0.12em;
+}
+
+/* ── RESULT ── */
+.result-header { text-align: center; margin-bottom: 28px; }
+
+.result-eyebrow {
+  font-size: 11px;
+  color: var(--pink);
+  letter-spacing: 0.18em;
+  margin-bottom: 6px;
+}
+
+.result-heading {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 15px;
+  color: var(--text-light);
+}
+
+.card-main {
+  background: linear-gradient(135deg, #fdf0f6 0%, #fff 65%);
+  border: 1px solid var(--pink-light);
+  border-radius: var(--radius-lg);
+  padding: 24px 22px;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.card-icon { font-size: 32px; margin-bottom: 10px; }
+
+.card-badge {
+  display: inline-block;
+  font-size: 10px;
+  color: var(--pink-deep);
+  background: var(--pink-light);
+  padding: 3px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+
+.type-name {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.type-summary { font-size: 14px; color: var(--text-light); line-height: 1.75; }
+
+.detail-section { margin-bottom: 16px; }
+
+.detail-head {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--pink-deep);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.detail-head::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 1px;
+  background: var(--pink-light);
+}
+
+.detail-body {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.85;
+  padding: 16px 18px;
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1px solid var(--grey-border);
+}
+
+.detail-body + .detail-body { margin-top: 8px; }
+
+.detail-label {
+  display: block;
+  font-size: 11px;
+  color: var(--pink-deep);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+/* ── RECOMMEND ── */
+.sec-title {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.sec-sub {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.sec-divider {
+  width: 28px;
+  height: 1px;
+  background: var(--pink-light);
+  margin-bottom: 20px;
+}
+
+.block-label {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--pink-deep);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.block-label::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 1px;
+  background: var(--pink-light);
+}
+
+.menu-list    { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.product-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+
+.menu-item {
+  background: var(--white);
+  border: 1px solid var(--grey-border);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.menu-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--pink);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.menu-name { font-size: 15px; color: var(--text); font-weight: 500; }
+.menu-note { font-size: 12px; color: var(--text-light); margin-top: 3px; }
+
+.product-item {
+  background: var(--white);
+  border: 1px solid var(--grey-border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.product-left { min-width: 0; }
+
+.product-role {
+  display: block;
+  font-size: 10px;
+  color: var(--pink-deep);
+  letter-spacing: 0.08em;
+  margin-bottom: 2px;
+}
+
+.product-name { font-size: 15px; color: var(--text); }
+
+.product-tag {
+  font-size: 11px;
+  color: var(--pink-deep);
+  background: var(--pink-light);
+  padding: 3px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.product-tag.salon {
+  color: var(--text-light);
+  background: var(--grey-light);
+}
+
+.visit-note {
+  font-size: 12px;
+  color: var(--text-light);
+  line-height: 1.8;
+  background: var(--pink-pale);
+  border: 1px solid var(--pink-light);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 28px;
+}
+
+/* ── CTA ── */
+.cta-header { text-align: center; margin-bottom: 36px; }
+
+.cta-title {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.cta-sub { font-size: 14px; color: var(--text-light); line-height: 1.75; }
+
+.cta-buttons { display: flex; flex-direction: column; gap: 14px; margin-bottom: 12px; }
+
+.retry-wrap { text-align: center; margin-top: 16px; }
+
+.btn-retry {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: underline;
+  font-family: 'Noto Sans JP', sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.mt-24 { margin-top: 24px; }
+.mt-32 { margin-top: 32px; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== INTRO ===== -->
+  <div id="screen-intro" class="screen active">
+    <p class="logo">Lita-lab</p>
+    <span class="intro-badge">SCALP &amp; HAIR DIAGNOSIS</span>
+    <h1 class="intro-title">
+      <small>頭皮と髪の</small>
+      未来診断
+    </h1>
+    <div class="intro-divider"></div>
+    <p class="intro-desc">
+      あなたの頭皮と髪の「今」を知ることで、<br>
+      未来に必要なケアが見えてきます。<br>
+      毛髪診断士が設計した診断で、<br>
+      頭皮と髪それぞれのタイプをお伝えします。
+    </p>
+    <div class="intro-stats">
+      <div class="stat-item">
+        <div class="stat-num">21</div>
+        <div class="stat-label">問</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">約3</div>
+        <div class="stat-label">分</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2</div>
+        <div class="stat-label">軸診断</div>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="startQuiz()">診断をはじめる</button>
+  </div>
+
+  <!-- ===== QUESTION ===== -->
+  <div id="screen-question" class="screen">
+    <div class="q-header">
+      <button class="btn-back" id="btn-back" onclick="goBack()">← 戻る</button>
+      <div class="q-counter">第 <strong id="q-num">1</strong> 問 / 21</div>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <p class="q-category" id="q-category"></p>
+    <p class="q-text" id="q-text"></p>
+    <div class="answers" id="answers-wrap"></div>
+  </div>
+
+  <!-- ===== LOADING ===== -->
+  <div id="screen-loading" class="screen">
+    <div class="loading-dots"><span></span><span></span><span></span></div>
+    <p class="loading-text">診断結果を分析しています…</p>
+  </div>
+
+  <!-- ===== RESULT ===== -->
+  <div id="screen-result" class="screen">
+    <p class="logo">Lita-lab</p>
+    <div class="result-header">
+      <p class="result-eyebrow">DIAGNOSIS RESULT</p>
+      <p class="result-heading">あなたの診断結果</p>
+    </div>
+
+    <div class="card-main">
+      <div class="card-icon" id="scalp-icon"></div>
+      <span class="card-badge">頭皮タイプ</span>
+      <h2 class="type-name" id="scalp-name"></h2>
+      <p class="type-summary" id="scalp-summary"></p>
+    </div>
+    <div class="card-main">
+      <div class="card-icon" id="hair-icon"></div>
+      <span class="card-badge">髪タイプ</span>
+      <h2 class="type-name" id="hair-name"></h2>
+      <p class="type-summary" id="hair-summary"></p>
+    </div>
+
+    <div class="detail-section mt-24">
+      <p class="detail-head">頭皮のこと</p>
+      <div class="detail-body">
+        <span class="detail-label">今の状態</span>
+        <span id="scalp-current"></span>
+      </div>
+      <div class="detail-body">
+        <span class="detail-label">今必要なケア</span>
+        <span id="scalp-care"></span>
+      </div>
+    </div>
+    <div class="detail-section">
+      <p class="detail-head">髪のこと</p>
+      <div class="detail-body">
+        <span class="detail-label">今の状態</span>
+        <span id="hair-current"></span>
+      </div>
+      <div class="detail-body">
+        <span class="detail-label">今必要なケア</span>
+        <span id="hair-care"></span>
+      </div>
+    </div>
+
+    <button class="btn-primary mt-24" onclick="showRecommend()">あなたへの処方を見る →</button>
+  </div>
+
+  <!-- ===== RECOMMEND ===== -->
+  <div id="screen-recommend" class="screen">
+    <p class="logo">Lita-lab</p>
+    <h2 class="sec-title">あなたへの処方</h2>
+    <p class="sec-sub" id="recommend-sub"></p>
+    <div class="sec-divider"></div>
+    <p class="block-label">サロンでのケア</p>
+    <div class="menu-list" id="menu-list"></div>
+    <p class="block-label">おすすめのホームケア</p>
+    <div class="product-list" id="product-list"></div>
+    <div class="visit-note">
+      ご来店時にはマイクロスコープで頭皮を実際に拝見し、より詳しい診断レポートをお作りできます。この結果画面をスクリーンショットしてお見せいただくと、カウンセリングがスムーズです。
+    </div>
+    <button class="btn-primary" onclick="showCTA()">次へ →</button>
+  </div>
+
+  <!-- ===== CTA ===== -->
+  <div id="screen-cta" class="screen">
+    <p class="logo">Lita-lab</p>
+    <div class="cta-header">
+      <h2 class="cta-title" id="cta-title"></h2>
+      <p class="cta-sub">診断結果をもとに、次のアクションを選んでください。</p>
+    </div>
+    <div class="cta-buttons" id="cta-buttons"></div>
+    <div class="retry-wrap">
+      <button class="btn-retry" onclick="restartQuiz()">もう一度診断する</button>
+    </div>
+  </div>
+
+</div>
+<script>
+// ============================================================
+// リンク設定
+// ============================================================
+const URLS = {
+  reservation: 'https://lita-lab.bionly.net/',   // bionly予約ページ
+  lineId:      '@eqx7559v',                       // LINE公式アカウントID
+  ec:          'https://lita-lab.stores.jp',      // ECサイト
+};
+
+// ============================================================
+// QUESTIONS  ※頭皮4タイプ×3問＋髪3タイプ×3問＝21問
+//   処方マトリクスVer2（頭皮5タイプ×髪4タイプ）に対応。
+//   「健康」タイプは合計点が低い場合に自動判定される。
+// ============================================================
+const QUESTIONS = [
+  // ── 頭皮について（タイプを混ぜて出題）──
+  { type:'scalpDry',   cat:'頭皮について', text:'頭皮が乾燥して、フケやカサつきが出やすい' },
+  { type:'scalpOily',  cat:'頭皮について', text:'頭皮がベタついたり、テカりやすい' },
+  { type:'scalpAging', cat:'頭皮について', text:'以前より髪のボリュームが減ってきたと感じる' },
+  { type:'scalpSens',  cat:'頭皮について', text:'カラーやパーマの薬剤が頭皮に染みやすい' },
+  { type:'scalpDry',   cat:'頭皮について', text:'頭皮にかゆみを感じることがある' },
+  { type:'scalpOily',  cat:'頭皮について', text:'夕方になると頭皮のにおいが気になる' },
+  { type:'scalpAging', cat:'頭皮について', text:'頭皮を触ると硬く感じることがある' },
+  { type:'scalpSens',  cat:'頭皮について', text:'頭皮に赤みやヒリヒリを感じることがある' },
+  { type:'scalpDry',   cat:'頭皮について', text:'シャンプーのあと、頭皮がつっぱる感じがある' },
+  { type:'scalpOily',  cat:'頭皮について', text:'髪の根元がすぐにぺたんとなってしまう' },
+  { type:'scalpAging', cat:'頭皮について', text:'以前より髪が細くなってきた気がする' },
+  { type:'scalpSens',  cat:'頭皮について', text:'頭皮が敏感で、合わないシャンプーがある' },
+  // ── 髪について ──
+  { type:'hairDry',    cat:'髪について',   text:'髪がパサついたり、乾燥しやすい' },
+  { type:'hairAging',  cat:'髪について',   text:'髪のハリ・コシがなくなってきたと感じる' },
+  { type:'hairDamage', cat:'髪について',   text:'髪が切れやすい・枝毛が目立つ' },
+  { type:'hairDry',    cat:'髪について',   text:'雨や湿気の多い日に、髪が広がったりうねったりしやすい' },
+  { type:'hairAging',  cat:'髪について',   text:'若いころと比べて髪質が変わってきたと感じる' },
+  { type:'hairDamage', cat:'髪について',   text:'髪の手触りがゴワゴワ・ザラついている' },
+  { type:'hairDry',    cat:'髪について',   text:'髪にツヤがなくなってきたと感じる' },
+  { type:'hairAging',  cat:'髪について',   text:'トップがふんわりしにくくなった' },
+  { type:'hairDamage', cat:'髪について',   text:'カラーやアイロンによる髪のダメージが気になる' },
+];
+
+// 各タイプ最大9点（3問×3点）。トップの点がこの値以下なら「健康タイプ」
+const HEALTHY_THRESHOLD = 2;
+
+// ============================================================
+// TYPE DATA（頭皮5タイプ）
+//   shampoo・tech・plus は処方マトリクスVer2の行に対応
+// ============================================================
+const SCALP_TYPES = {
+  scalpDry: {
+    name:    '乾燥頭皮タイプ',
+    icon:    '🌿',
+    summary: 'うるおいが不足し、乾燥しやすい頭皮の状態です。',
+    current: '頭皮のうるおいが不足し、カサつきやかゆみを感じやすくなっています。乾燥した頭皮はデリケートに傾きがちです。',
+    care:    'やさしく洗いながら、頭皮にうるおいを与える保湿ケアがおすすめです。',
+    shampoo: 'R-21シャンプー',
+    plus:    'ホホバオイル',
+    tech:    { name:'ホホバオイルトリートメント＋ヘッドスパ', note:'頭皮にうるおいを補給しながらリラックス' },
+  },
+  scalpOily: {
+    name:    '皮脂バランス乱れタイプ',
+    icon:    '💧',
+    summary: '皮脂のバランスが乱れ、毛穴に汚れがたまりやすい状態です。',
+    current: '皮脂や洗い残しが毛穴にたまりやすく、ベタつきやにおいを感じやすい状態です。根元がぺたんとしやすいのもこのサインです。',
+    care:    '毛穴の汚れをやさしくクレンジングし、皮脂バランスを整えるケアがおすすめです。',
+    shampoo: 'R-21シャンプー',
+    plus:    'ヤクジョスイ',
+    tech:    { name:'泡クレンジング＋ヘッドスパ', note:'毛穴の汚れをやさしくすっきりオフ' },
+  },
+  scalpAging: {
+    name:    'エイジングサイン頭皮タイプ',
+    icon:    '🌸',
+    summary: '頭皮にエイジングサインが出はじめている状態です。',
+    current: '頭皮が硬く感じられ、ふんわり感やハリ・コシが出にくくなってきています。年齢による頭皮の変化が始まっているサインです。',
+    care:    '頭皮のめぐりを整え、土台からのエイジングケア（年齢に応じたケア）を始めるのがおすすめです。',
+    shampoo: 'MOTONIMOトル',
+    plus:    'エクソソームステムセル',
+    tech:    { name:'MOTONIMO＋ヘッドスパ', note:'頭皮の土台からじっくりエイジングケア' },
+  },
+  scalpSens: {
+    name:    '敏感頭皮タイプ',
+    icon:    '🕊️',
+    summary: '外からの刺激に敏感になっている頭皮の状態です。',
+    current: 'カラーなどの刺激で赤みやヒリつきを感じやすい、デリケートな状態です。強い症状が続く場合は、皮膚科など専門機関へのご相談もおすすめします。',
+    care:    '低刺激カラーやヘナへの切り替えなど、頭皮への負担を減らす選択がおすすめです。',
+    shampoo: '潤髪シャンプー',
+    plus:    'ホホバオイル',
+    tech:    { name:'低刺激カラー・ヘナのご提案＋ヘマチンケア', note:'頭皮にやさしい施術への切り替え' },
+  },
+  scalpHealthy: {
+    name:    'すこやか頭皮タイプ',
+    icon:    '☀️',
+    summary: '今はすこやかなバランスが保てている頭皮です。',
+    current: '大きな気になりサインは見られません。年齢や季節で頭皮環境は少しずつ変わるので、良い状態のうちから予防ケアを始めると安心です。',
+    care:    '定期的なヘッドスパで、良い状態を保つ予防メンテナンスがおすすめです。',
+    shampoo: 'R-21シャンプー',
+    plus:    'プレシャスヘマチン',
+    tech:    { name:'ヘッドスパ（予防メンテナンス）', note:'良い状態をキープする定期ケア' },
+  },
+};
+
+// ============================================================
+// TYPE DATA（髪4タイプ）
+//   treatment・tech・plus は処方マトリクスVer2の行に対応
+// ============================================================
+const HAIR_TYPES = {
+  hairDry: {
+    name:    '乾燥・うねり髪タイプ',
+    icon:    '✨',
+    summary: '髪のうるおいが不足し、パサつき・広がりが出やすい状態です。',
+    current: '髪の水分バランスが乱れ、パサつき・うねり・広がりが出やすくなっています。湿気の影響も受けやすい状態です。',
+    care:    '水分をしっかり補い、閉じ込める保湿ケアがおすすめです。',
+    treatment: '潤髪トリートメント',
+    plus:      'MOTONIMOマモル',
+    tech:      { name:'シルクトリートメント', note:'しっとりまとまるツヤ髪へ' },
+  },
+  hairAging: {
+    name:    'エイジング髪タイプ',
+    icon:    '🌷',
+    summary: '髪のハリ・コシに変化が出はじめている状態です。',
+    current: '若いころと比べて、ハリ・コシやふんわり感が出にくくなってきています。髪質の変化を感じはじめるタイミングです。',
+    care:    '髪にハリ・コシを与えるエイジングケア（年齢に応じたケア）で、扱いやすい髪へ整えましょう。',
+    treatment: 'R-21トリートメント',
+    plus:      'プレシャスヘマチン',
+    tech:      { name:'MOTONIMO', note:'髪の土台から立ち上がりをサポート' },
+  },
+  hairDamage: {
+    name:    'ダメージ蓄積髪タイプ',
+    icon:    '🌱',
+    summary: 'カラーや熱によるダメージが髪に蓄積している状態です。',
+    current: 'カラー・パーマ・アイロンなどの積み重ねで、ゴワつきや枝毛が出やすくなっています。手触りやツヤに影響が出ている状態です。',
+    care:    '傷んだ部分を集中的にケアして、手触りとツヤを整えましょう。',
+    treatment: '潤髪トリートメント',
+    plus:      'ホホバオイル',
+    tech:      { name:'ボンドトリートメント', note:'ダメージの気になる髪を集中ケア' },
+  },
+  hairHealthy: {
+    name:    'すこやか髪タイプ',
+    icon:    '🌼',
+    summary: '今はすこやかなコンディションの髪です。',
+    current: '大きなダメージサインは見られません。カラーや紫外線で髪の状態は少しずつ変化するので、予防ケアで先回りしましょう。',
+    care:    '定期的なトリートメントで、良い状態を保つ予防メンテナンスがおすすめです。',
+    treatment: 'R-21トリートメント',
+    plus:      'ヤクジョスイ',
+    tech:      { name:'ヘッドスパ（予防メンテナンス）', note:'良い状態をキープする定期ケア' },
+  },
+};
+
+// EC取扱い（○＝ECで購入可 / ×＝サロン限定・店頭でご案内）
+const EC_AVAILABLE = {
+  'R-21シャンプー': true,
+  'R-21トリートメント': true,
+  '潤髪シャンプー': false,
+  '潤髪トリートメント': false,
+  'ヤクジョスイ': false,
+  'プレシャスヘマチン': true,
+  'ホホバオイル': true,
+  'MOTONIMOトル': false,
+  'MOTONIMOマモル': false,
+  'エクソソームステムセル': true,
+  '頭皮ブラシ': true,
+};
+
+// ============================================================
+// STATE
+// ============================================================
+const state = { currentQ: 0, answers: new Array(QUESTIONS.length).fill(null) };
+let diagResult = { scalpType: null, hairType: null, worstPlus: null };
+
+// ============================================================
+// HELPERS
+// ============================================================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+// ============================================================
+// QUIZ FLOW
+// ============================================================
+function startQuiz() {
+  state.currentQ = 0;
+  state.answers.fill(null);
+  showScreen('screen-question');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const i   = state.currentQ;
+  const q   = QUESTIONS[i];
+  const pct = (i / QUESTIONS.length) * 100;
+
+  document.getElementById('q-num').textContent         = i + 1;
+  document.getElementById('q-category').textContent    = q.cat;
+  document.getElementById('q-text').textContent        = q.text;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('btn-back').style.visibility = i === 0 ? 'hidden' : 'visible';
+
+  const opts = [
+    { label:'よくある',      score:3 },
+    { label:'ときどきある',  score:2 },
+    { label:'たまにある',    score:1 },
+    { label:'ほとんどない',  score:0 },
+  ];
+
+  document.getElementById('answers-wrap').innerHTML = opts.map(o =>
+    `<button class="answer-btn" onclick="selectAnswer(${o.score}, this)">
+       <span class="answer-dot"></span>${o.label}
+     </button>`
+  ).join('');
+}
+
+function selectAnswer(score, el) {
+  document.querySelectorAll('.answer-btn').forEach(b => b.disabled = true);
+  el.classList.add('selected');
+  state.answers[state.currentQ] = score;
+
+  setTimeout(() => {
+    if (state.currentQ < QUESTIONS.length - 1) {
+      state.currentQ++;
+      renderQuestion();
+    } else {
+      calculateAndShow();
+    }
+  }, 300);
+}
+
+function goBack() {
+  if (state.currentQ > 0) {
+    state.currentQ--;
+    renderQuestion();
+  }
+}
+
+// ============================================================
+// CALCULATE（処方マトリクスVer2ロジック）
+//   頭皮軸・髪軸それぞれで最高点タイプを判定。
+//   トップが HEALTHY_THRESHOLD 以下なら健康タイプ。
+//   +1アイテムは全タイプ中いちばん点が高い（最重症）タイプから。
+// ============================================================
+function calculateAndShow() {
+  showScreen('screen-loading');
+  setTimeout(() => {
+    const scores = {};
+    QUESTIONS.forEach((q, i) => {
+      scores[q.type] = (scores[q.type] || 0) + (state.answers[i] ?? 0);
+    });
+
+    const scalpKeys = ['scalpDry', 'scalpOily', 'scalpAging', 'scalpSens'];
+    const hairKeys  = ['hairDry', 'hairAging', 'hairDamage'];
+
+    const topScalp = scalpKeys.slice().sort((a, b) => scores[b] - scores[a])[0];
+    const topHair  = hairKeys.slice().sort((a, b) => scores[b] - scores[a])[0];
+
+    diagResult.scalpType = scores[topScalp] <= HEALTHY_THRESHOLD ? 'scalpHealthy' : topScalp;
+    diagResult.hairType  = scores[topHair]  <= HEALTHY_THRESHOLD ? 'hairHealthy'  : topHair;
+
+    // +1アイテム＝最重症タイプの行から（両軸とも健康なら頭皮ブラシ）
+    const allSorted = [...scalpKeys, ...hairKeys].sort((a, b) => scores[b] - scores[a]);
+    const worst = allSorted[0];
+    if (scores[worst] <= HEALTHY_THRESHOLD) {
+      diagResult.worstPlus = '頭皮ブラシ';
+    } else {
+      diagResult.worstPlus = (SCALP_TYPES[worst] || HAIR_TYPES[worst]).plus;
+    }
+
+    renderResult();
+  }, 1800);
+}
+
+// ============================================================
+// RESULT SCREEN
+// ============================================================
+function renderResult() {
+  const scalp = SCALP_TYPES[diagResult.scalpType];
+  const hair  = HAIR_TYPES[diagResult.hairType];
+
+  document.getElementById('scalp-icon').textContent    = scalp.icon;
+  document.getElementById('scalp-name').textContent    = scalp.name;
+  document.getElementById('scalp-summary').textContent = scalp.summary;
+  document.getElementById('scalp-current').textContent = scalp.current;
+  document.getElementById('scalp-care').textContent    = scalp.care;
+
+  document.getElementById('hair-icon').textContent    = hair.icon;
+  document.getElementById('hair-name').textContent    = hair.name;
+  document.getElementById('hair-summary').textContent = hair.summary;
+  document.getElementById('hair-current').textContent = hair.current;
+  document.getElementById('hair-care').textContent    = hair.care;
+
+  showScreen('screen-result');
+}
+
+// ============================================================
+// RECOMMEND SCREEN（処方＝マトリクスVer2）
+//   シャンプー＝頭皮タイプ / トリートメント＝髪タイプ
+//   +1アイテム＝最重症タイプ / 技術＝頭皮・髪から各1
+// ============================================================
+function productTag(name) {
+  return EC_AVAILABLE[name]
+    ? '<span class="product-tag">ECで購入OK</span>'
+    : '<span class="product-tag salon">サロン限定</span>';
+}
+
+function showRecommend() {
+  const scalp = SCALP_TYPES[diagResult.scalpType];
+  const hair  = HAIR_TYPES[diagResult.hairType];
+
+  document.getElementById('recommend-sub').textContent =
+    `「${scalp.name} × ${hair.name}」のあなたへ、毛髪診断士の処方ルールに基づくおすすめです。`;
+
+  // サロンメニュー：頭皮から1つ＋髪から1つ（重複したら1つに）
+  const menus = [scalp.tech];
+  if (hair.tech.name !== scalp.tech.name) menus.push(hair.tech);
+  document.getElementById('menu-list').innerHTML = menus.map(m =>
+    `<div class="menu-item">
+       <div class="menu-dot"></div>
+       <div>
+         <div class="menu-name">${m.name}</div>
+         <div class="menu-note">${m.note}</div>
+       </div>
+     </div>`
+  ).join('');
+
+  // ホームケア：シャンプー（頭皮）＋トリートメント（髪）＋プラス1（最重症）
+  const products = [
+    { role:'シャンプー（頭皮タイプから）',     name: scalp.shampoo },
+    { role:'トリートメント（髪タイプから）',   name: hair.treatment },
+    { role:'プラス1アイテム',                   name: diagResult.worstPlus },
+  ];
+  // 同じ商品が重なったら1つに
+  const seen = new Set();
+  document.getElementById('product-list').innerHTML = products
+    .filter(p => !seen.has(p.name) && seen.add(p.name))
+    .map(p =>
+      `<div class="product-item">
+         <div class="product-left">
+           <span class="product-role">${p.role}</span>
+           <span class="product-name">${p.name}</span>
+         </div>
+         ${productTag(p.name)}
+       </div>`
+    ).join('');
+
+  showScreen('screen-recommend');
+}
+
+// ============================================================
+// CTA SCREEN
+// ============================================================
+function showCTA() {
+  const scalp = SCALP_TYPES[diagResult.scalpType];
+  const hair  = HAIR_TYPES[diagResult.hairType];
+
+  document.getElementById('cta-title').textContent =
+    `${scalp.name} × ${hair.name}のあなたへ`;
+
+  // LINEには診断結果を最初から入れたメッセージで送れる
+  const lineMsg = encodeURIComponent(
+    `【頭皮未来診断】結果：頭皮＝${scalp.name} × 髪＝${hair.name}でした。詳しいアドバイスをお願いします`
+  );
+  const lineUrl = `https://line.me/R/oaMessage/${encodeURIComponent(URLS.lineId)}/?${lineMsg}`;
+
+  document.getElementById('cta-buttons').innerHTML = `
+    <a href="${URLS.reservation}" class="btn-primary" target="_blank" rel="noopener">
+      この結果に合うケアを予約する
+    </a>
+    <a href="${lineUrl}" class="btn-line" target="_blank" rel="noopener">
+      診断結果をLINEで送って相談する
+    </a>
+    <a href="${URLS.ec}" class="btn-sub" target="_blank" rel="noopener">
+      おすすめ商品をECで見る
+    </a>`;
+
+  showScreen('screen-cta');
+}
+
+// ============================================================
+// RESTART
+// ============================================================
+function restartQuiz() {
+  state.currentQ = 0;
+  state.answers.fill(null);
+  showScreen('screen-intro');
+}
+</script>
+</body></html>
