@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lita-lab LINEフォロー文メーカー v2</title>
+<style>
+  :root{ --rose:#C8848C; --rose-pale:#F7EDEE; --gold:#B8923A; --ink:#3a3236; --line:#ddd3cb; }
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:-apple-system,"Hiragino Sans","Yu Gothic",sans-serif; background:#f4efe9; color:var(--ink); font-size:16px; line-height:1.6; padding-bottom:120px;}
+  header{background:linear-gradient(135deg,var(--rose),#dfa9ae); color:#fff; padding:12px 16px; position:sticky; top:0; z-index:5;}
+  header h1{margin:0; font-size:17px;}
+  header p{margin:2px 0 0; font-size:12px; opacity:.9;}
+  .wrap{max-width:680px; margin:0 auto; padding:12px;}
+  .scenes{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;}
+  .scene{border:1.5px solid var(--rose); border-radius:999px; padding:8px 13px; font-size:13.5px; background:#fff; color:var(--rose); cursor:pointer; font-weight:600;}
+  .scene.on{background:var(--rose); color:#fff;}
+  section{background:#fff; border-radius:14px; padding:12px 14px; margin-bottom:12px; box-shadow:0 1px 4px rgba(0,0,0,.06);}
+  section.hide{display:none;}
+  h2{margin:0 0 8px; font-size:15px; color:var(--rose);}
+  h2 small{color:#8a7f78; font-weight:400; font-size:12px;}
+  input[type=text], select, textarea{width:100%; font-size:16px; padding:10px; border:1.5px solid var(--line); border-radius:10px; background:#fff; color:var(--ink); font-family:inherit;}
+  textarea{min-height:64px;}
+  .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{border:1.5px solid var(--line); border-radius:999px; padding:7px 14px; font-size:14.5px; background:#fff; cursor:pointer; user-select:none;}
+  .chip.on{background:var(--rose); border-color:var(--rose); color:#fff; font-weight:600;}
+  .chip.gold.on{background:var(--gold); border-color:var(--gold);}
+  .care select{margin-bottom:8px;}
+  label.lb{font-size:13px; color:#8a7f78; display:block; margin:6px 0 3px;}
+  .scores{display:grid; grid-template-columns:1fr 1fr; gap:6px 10px;}
+  .scoreRow{display:flex; align-items:center; gap:6px; font-size:14px;}
+  .scoreRow span{flex:1;}
+  .scoreRow select{width:64px; padding:6px;}
+  #preview{white-space:pre-wrap; background:#eef6ee; border:1.5px solid #cfe3cf; border-radius:14px; padding:14px; font-size:15.5px; min-height:180px;}
+  .bar{position:fixed; left:0; right:0; bottom:0; background:#fff; border-top:1px solid var(--line); padding:10px 12px calc(10px + env(safe-area-inset-bottom)); display:flex; gap:10px; z-index:9;}
+  .bar button{flex:1; font-size:17px; font-weight:700; padding:14px; border-radius:12px; border:none; cursor:pointer;}
+  #copyBtn{background:var(--rose); color:#fff;}
+  #resetBtn{background:#eee; color:var(--ink); flex:0 0 90px;}
+  #copyBtn.done{background:#4c9a5f;}
+  .hint{font-size:12px; color:#8a7f78; margin-top:6px;}
+</style>
+</head>
+<body>
+<header>
+  <h1>💬 LINEフォロー文メーカー v2</h1>
+  <p>①場面を選ぶ → ②タップで埋める → ③コピーしてLINEへ（署名なし・Lisaのトーン）</p>
+</header>
+
+<div class="wrap">
+
+  <div class="scenes" id="scenes"></div>
+
+  <section data-sc="all">
+    <h2>お客様のお名前 <small>「様」は自動</small></h2>
+    <input type="text" id="name" placeholder="例：山田花子" oninput="build()">
+  </section>
+
+  <section data-sc="visit">
+    <h2>今日の施術 <small>当てはまるものをタップ</small></h2>
+    <div class="chips" id="menu"></div>
+    <label class="lb">その他（手入力）</label>
+    <input type="text" id="menuFree" placeholder="例：前髪カット" oninput="build()">
+  </section>
+
+  <section data-sc="visit,day7,month1,month3">
+    <h2>気になっていたお悩み <small>1〜2個</small></h2>
+    <div class="chips" id="nayami"></div>
+  </section>
+
+  <section data-sc="visit,shindan">
+    <h2>診断タイプ <small>シート裏面と同じもの</small></h2>
+    <div class="chips" id="type"></div>
+  </section>
+
+  <section data-sc="shindan">
+    <h2>頭皮・髪の7項目スコア <small>1〜5（サロン版診断と同じ）</small></h2>
+    <div class="scores" id="scores"></div>
+    <label class="lb">担当からのアドバイス（一言でOK・Lisaの言葉で）</label>
+    <textarea id="advice" placeholder="例：皮脂は多めでしたが、洗い方を変えるだけで変わっていける頭皮です。まずはぬるま湯1分から始めましょう" oninput="build()"></textarea>
+  </section>
+
+  <section class="care" data-sc="visit,shindan">
+    <h2>🏠 ホームケア3つ <small>シートの「今夜からの3つ」と同じものを</small></h2>
+    <select id="care1" onchange="build()"></select>
+    <select id="care2" onchange="build()"></select>
+    <select id="care3" onchange="build()"></select>
+    <label class="lb">自由入力（④として追加）</label>
+    <input type="text" id="careFree" placeholder="例：今週は洗い流さないトリートメントを毛先だけに" oninput="build()">
+  </section>
+
+  <section data-sc="visit,shindan,month1,month3,month6">
+    <h2>次回の目安と締めのひとこと</h2>
+    <label class="lb">次回のご予約が決まっている場合（日時を入力→こちらが優先されます）</label>
+    <input type="text" id="bookedAt" placeholder="例：8月7日（金）14:00" oninput="build()">
+    <label class="lb">次回のご来店目安（入れない場合は空欄）</label>
+    <select id="interval" onchange="build()">
+      <option value="">（入れない）</option>
+      <option>3週間</option><option selected>4週間</option><option>5週間</option><option>6週間</option><option>2ヶ月</option><option>3ヶ月</option>
+    </select>
+    <label class="lb">締めのひとこと</label>
+    <select id="season" onchange="build()">
+      <option>扱いにくくなったら、ご来店の目安です。</option>
+      <option>次回もしっかりケアさせてくださいね。</option>
+      <option>健康でキレイになるためのサポートを、させてください。</option>
+      <option>暑い毎日、どうぞご自愛ください。</option>
+      <option>蒸し暑い日が続きますが、どうぞご自愛ください。</option>
+      <option>季節の変わり目、どうぞご自愛ください。</option>
+      <option>寒い毎日、どうぞ温かくお過ごしください。</option>
+      <option value="">（なし）</option>
+    </select>
+  </section>
+
+  <section data-sc="all">
+    <h2>✉️ できあがり <small>このままコピーしてLINEへ</small></h2>
+    <div id="preview"></div>
+    <div class="hint">コピーできない端末では、上の文を長押し→すべて選択→コピーでもOK。</div>
+  </section>
+
+</div>
+
+<div class="bar">
+  <button id="resetBtn" onclick="resetAll()">リセット</button>
+  <button id="copyBtn" onclick="copyText()">📋 文をコピー</button>
+</div>
+
+<script>
+const SCENES = [
+  {id:"visit",  label:"🌿 来店直後"},
+  {id:"shindan",label:"📊 診断結果を送る"},
+  {id:"day7",   label:"📅 7日後フォロー"},
+  {id:"month1", label:"🗓 1ヶ月お伺い"},
+  {id:"month3", label:"🔁 3ヶ月・再来のご案内"},
+  {id:"month6", label:"💌 6ヶ月・お久しぶり"},
+];
+let scene = "visit";
+
+const MENUS = ["カット","カラー","オーガニックヘナ","ノンジアミンカラー","香草カラー","パーマ","コテカール","ストレート","ヘッドスパ","トリートメント","MOTONIMO","エクソソーム頭皮エイジングケア","インナースキャンセラピー"];
+const NAYAMI = ["ベタつき","におい","乾燥・かゆみ","フケ","うねり・くせ","広がり","パサつき","白髪","抜け毛のご心配","ハリ・コシ","ボリューム","スタイル"];
+const TYPES = ["すこやか頭皮","乾燥頭皮","皮脂バランス乱れ","敏感頭皮","エイジングサイン頭皮","すこやか髪","うねり髪","ダメージ蓄積髪","エイジング髪"];
+const CARES = [
+  "シャンプー前に、38℃くらいのぬるま湯で1分の予洗い",
+  "洗うときは爪を立てず指の腹でしっかり洗って、揉み出し洗いも",
+  "すすぎは丁寧に。シャンプーの泡がなくなってから、もう一度しっかりすすぐ",
+  "自然乾燥は避けて、洗ったらすぐ乾かす",
+  "ドライヤーの仕上げに冷風をあてる",
+  "ドライヤーのときにしっかり地肌を揺さぶって、生えグセをとる",
+  "サロンシャンプーの泡で髪を包んで、2分の泡パック",
+  "外出のときは帽子や日傘で、頭にも日差し対策を",
+  "シャンプーは朝より夜に。頭皮を清潔にして眠る",
+  "首こり・肩こりの解消マッサージをする",
+  "地肌からしっかりブラッシングする",
+  "たっぷり睡眠をとる",
+];
+const SCORE_ITEMS = ["頭皮の色","毛穴","皮脂・うるおい","髪の太さ","ハリ・コシ","密度","キューティクル"];
+
+function chips(id, arr, cls=""){
+  const el = document.getElementById(id);
+  arr.forEach(t=>{
+    const c=document.createElement('div');
+    c.className='chip '+cls; c.textContent=t;
+    c.onclick=()=>{ c.classList.toggle('on'); build(); };
+    el.appendChild(c);
+  });
+}
+chips('menu', MENUS); chips('nayami', NAYAMI); chips('type', TYPES, 'gold');
+
+['care1','care2','care3'].forEach((id,i)=>{
+  const s=document.getElementById(id);
+  s.innerHTML = `<option value="">（${i+1}つ目を選ぶ）</option>` + CARES.map(c=>`<option>${c}</option>`).join('');
+  if(i===0) s.selectedIndex = 1;
+  if(i===1) s.selectedIndex = 3;
+  if(i===2) s.selectedIndex = 4;
+});
+
+const scDiv = document.getElementById('scores');
+SCORE_ITEMS.forEach((t,i)=>{
+  const row=document.createElement('div'); row.className='scoreRow';
+  row.innerHTML = `<span>${t}</span>`;
+  const sel=document.createElement('select'); sel.id='sc'+i;
+  sel.innerHTML = `<option value="">−</option>`+[1,2,3,4,5].map(n=>`<option>${n}</option>`).join('');
+  sel.onchange=build;
+  row.appendChild(sel); scDiv.appendChild(row);
+});
+
+const scenesDiv = document.getElementById('scenes');
+SCENES.forEach(sc=>{
+  const b=document.createElement('div'); b.className='scene'+(sc.id===scene?' on':''); b.textContent=sc.label;
+  b.onclick=()=>{ scene=sc.id; document.querySelectorAll('.scene').forEach(x=>x.classList.remove('on')); b.classList.add('on'); showSections(); build(); };
+  scenesDiv.appendChild(b);
+});
+function showSections(){
+  document.querySelectorAll('section[data-sc]').forEach(sec=>{
+    const list = sec.dataset.sc.split(',');
+    sec.classList.toggle('hide', !(list.includes('all')||list.includes(scene)));
+  });
+}
+
+const on = id => [...document.querySelectorAll('#'+id+' .chip.on')].map(c=>c.textContent);
+const marks = ["①","②","③","④"];
+const stars = n => "●".repeat(n)+"○".repeat(5-n);
+const RESERVE = "ご予約はこちらから → https://lita-lab.bionly.net/";
+
+function build(){
+  const name = document.getElementById('name').value.trim();
+  const nm = name ? name+"様\n" : "";
+  const menus = on('menu'), nayami = on('nayami'), types = on('type');
+  const menuFree = document.getElementById('menuFree').value.trim(); if(menuFree) menus.push(menuFree);
+  const bookedAt = document.getElementById('bookedAt').value.trim();
+  const cares = ['care1','care2','care3'].map(id=>document.getElementById(id).value).filter(Boolean);
+  const free = document.getElementById('careFree').value.trim(); if(free) cares.push(free);
+  const interval = document.getElementById('interval').value;
+  const season = document.getElementById('season').value;
+  const advice = document.getElementById('advice').value.trim();
+  const scores = SCORE_ITEMS.map((t,i)=>({t, v: document.getElementById('sc'+i).value})).filter(x=>x.v);
+  const carePart = cares.length ? "\n🏠 今夜からのホームケア\n"+cares.map((c,i)=>marks[i]+" "+c).join("\n")+"\n" : "";
+  const seasonPart = season ? season+"\n" : "";
+  let t = "";
+
+  if(scene==="visit"){
+    t = nm + "本日はご来店いただきありがとうございました🌿\n\n";
+    if(menus.length) t += "今日は【"+menus.join("・")+"】をさせていただきました。\n";
+    if(types.length) t += "頭皮・髪の状態は「"+types.join("／")+"」。\n";
+    if(nayami.length) t += nayami.join("と")+"が気になるとのことでしたので、今日の施術とあわせて、おうちでのケアをまとめますね。\n";
+    t += carePart;
+    if(bookedAt) t += "\n次回のご予約："+bookedAt+" にお待ちしています。\n";
+    else if(interval) t += "\n次回は "+interval+"後ごろ がおすすめのタイミングです。\n"+RESERVE+"\n";
+    t += "\n気になることがあれば、いつでもこのLINEでご相談ください。\n"+seasonPart;
+  }
+  else if(scene==="shindan"){
+    t = nm + "本日の頭皮・髪の診断結果をお送りします🌿\n\n";
+    if(types.length) t += "【あなたの今のタイプ】\n"+types.join("／")+"\n\n";
+    if(scores.length){
+      t += "【7項目チェック（●の数＝5段階）】\n";
+      scores.forEach(x=>{ t += "・"+x.t+"："+stars(+x.v)+"\n"; });
+      t += "\n";
+    }
+    if(advice) t += "【担当からのアドバイス】\n"+advice+"\n";
+    t += carePart;
+    if(bookedAt) t += "\n次回のご予約："+bookedAt+" ── 同じ項目でチェックして、変化を一緒に見ていきましょう。\n";
+    else if(interval) t += "\n次回は "+interval+"後ごろ、同じ項目でチェックして変化を一緒に見ていきましょう。\n"+RESERVE+"\n";
+    t += "\nご不明な点は、いつでもこのLINEでご相談ください。\n"+seasonPart;
+  }
+  else if(scene==="day7"){
+    t = nm + "ご来店から1週間がたちました🌿\nその後、髪と頭皮の調子はいかがですか？\n\n";
+    if(nayami.length) t += nayami.join("・")+"のその後も気になっているところです。\n";
+    t += "お伝えしたホームケア、無理なく続けられていますか？\n「ここがうまくいかない」があれば、そのまま返信してください。あなたのペースに合わせて調整します。\n";
+  }
+  else if(scene==="month1"){
+    t = nm + "早いもので、ご来店から1ヶ月です🌿\n\n";
+    if(nayami.length) t += nayami.join("・")+"のその後はいかがですか？\n";
+    t += "髪と頭皮は少しずつ変わっていくので、「変わった気がする」も「変わらない」も、どちらも大事なサインです。よければ一言、教えてください。\n";
+    if(interval) t += "\nそろそろ次のケアの時期も近づいています。\n"+RESERVE+"\n";
+    t += "\n"+seasonPart;
+  }
+  else if(scene==="month3"){
+    t = nm + "ご無沙汰しています、Lita-labです🌿\n前回のご来店から、3ヶ月ほどになります。\n\n";
+    if(nayami.length) t += nayami.join("・")+"のその後、いかがでしょうか。\n";
+    t += "頭皮の状態は季節でも変わるので、前回の診断結果と比べて「いまの頭皮」を一度チェックしませんか？変化が見えると、ケアはもっと楽になります。\n\n"+RESERVE+"\n";
+    t += "ご来店がむずかしいときは、髪のお悩み相談だけでもお気軽にどうぞ。\n"+seasonPart;
+  }
+  else if(scene==="month6"){
+    t = nm + "お久しぶりです、Lita-labです🌿\nその後、髪と頭皮の調子はいかがでしょうか。\n\n";
+    t += "半年で髪はおよそ6cm伸びます。いま見えている髪は、半年前の頭皮が育てた髪。そろそろ「いまの頭皮」を見てあげるタイミングかもしれません。\n\n"+RESERVE+"\n";
+    t += "お返事だけでもうれしいです。いつでもこのLINEでご相談ください。\n"+seasonPart;
+  }
+  document.getElementById('preview').textContent = t;
+}
+
+function copyText(){
+  const t = document.getElementById('preview').textContent;
+  const btn = document.getElementById('copyBtn');
+  const ok = ()=>{ btn.textContent="✅ コピーしました！LINEへ貼り付け"; btn.classList.add('done'); setTimeout(()=>{btn.textContent="📋 文をコピー"; btn.classList.remove('done');}, 2500); };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(ok).catch(()=>fallback(t, ok));
+  } else fallback(t, ok);
+}
+function fallback(t, ok){
+  const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta);
+  ta.select(); try{ document.execCommand('copy'); ok(); }catch(e){ alert('長押しでコピーしてください'); }
+  document.body.removeChild(ta);
+}
+function resetAll(){
+  document.querySelectorAll('.chip.on').forEach(c=>c.classList.remove('on'));
+  document.getElementById('name').value=""; document.getElementById('careFree').value=""; document.getElementById('menuFree').value=""; document.getElementById('bookedAt').value="";
+  document.getElementById('advice').value="";
+  SCORE_ITEMS.forEach((t,i)=>{ document.getElementById('sc'+i).value=""; });
+  build();
+}
+showSections(); build();
+</script>
+</body>
+</html>
