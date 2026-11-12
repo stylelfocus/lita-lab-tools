@@ -38,6 +38,19 @@
   #resetBtn{background:#eee; color:var(--ink); flex:0 0 90px;}
   #copyBtn.done{background:#4c9a5f;}
   .hint{font-size:12px; color:#8a7f78; margin-top:6px;}
+  .hint.red{color:#b0475a;}
+  .row2{display:flex; gap:10px;} .row2 > div{flex:1;}
+  .chip .bd{font-size:11px; margin-left:4px; opacity:.9;}
+  .chip.none.on{background:#8a7f78; border-color:#8a7f78;}
+  .scrow{display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding:9px 0; border-bottom:1px solid #f4ecef;}
+  .scrow:last-child{border-bottom:0;}
+  .scrow .nm{flex:1 1 100%; font-size:14px;}
+  .scrow .lo, .scrow .hi{font-size:11px; color:#8a7f78;}
+  .scrow .nm .now{display:block; font-size:12px; color:#8a7f78; margin-top:2px;}
+  .mk{width:46px; height:42px; font-size:19px; border:1.5px solid var(--line); border-radius:8px; background:#fff; cursor:pointer; color:var(--ink);}
+  .mk.on{background:var(--rose); color:#fff; border-color:var(--rose);}
+  .small{font-size:12.5px; background:transparent; border:1px solid var(--line); color:#8a7f78; padding:5px 10px; border-radius:6px; cursor:pointer; margin-top:6px;}
+  input[type=date]{width:100%; font-size:16px; padding:10px; border:1.5px solid var(--line); border-radius:10px; background:#fff; color:var(--ink); font-family:inherit;}
 </style>
 </head>
 <body>
@@ -67,19 +80,57 @@
     <div class="chips" id="nayami"></div>
   </section>
 
-  <section data-sc="visit,shindan">
+  <section data-sc="visit">
     <h2>診断タイプ <small>シート裏面と同じもの</small></h2>
     <div class="chips" id="type"></div>
   </section>
 
   <section data-sc="shindan">
-    <h2>頭皮・髪の7項目スコア <small>1〜5（サロン版診断と同じ）</small></h2>
-    <div class="scores" id="scores"></div>
-    <label class="lb">担当からのアドバイス（一言でOK・Lisaの言葉で）</label>
-    <textarea id="advice" placeholder="例：皮脂は多めでしたが、洗い方を変えるだけで変わっていける頭皮です。まずはぬるま湯1分から始めましょう" oninput="build()"></textarea>
+    <div class="row2">
+      <div><label class="lb">担当</label><input type="text" id="rstaff" placeholder="例：なみ" oninput="rSaveStaff();build()"></div>
+      <div><label class="lb">今日の日付</label><input type="date" id="rdate" onchange="build()"></div>
+    </div>
   </section>
 
-  <section class="care" data-sc="visit,shindan">
+  <section data-sc="shindan">
+    <h2>① 頭皮未来診断のタイプ <small>1つ目＝メイン、2つ目＝サブ</small></h2>
+    <div class="chips" id="rtypes"></div>
+  </section>
+
+  <section data-sc="shindan">
+    <h2>② マイクロスコープで見た結果 <small>5点＝すこやか　3点＝まずまず　1点＝ここが伸びしろ</small></h2>
+    <div id="rscores"></div>
+    <p class="hint red">「皮膚科へのご案内」の①〜⑤（赤み＋痛み・しみる／毛穴が見えない／丸く抜けている・短く切れた毛／赤くジュクジュク・フケが多い／広がる出来物／全体にまだら＋体調不良が続く）が見えたときは、ここには書かず、ご案内の言葉で口頭で。</p>
+    <label class="lb">LINEに添える写真</label>
+    <select id="rphotos" onchange="build()">
+      <option value="0">添えない</option>
+      <option value="1">1枚</option>
+      <option value="2" selected>2枚（いちばん話したところ＋すこやかなところ）</option>
+      <option value="3">3枚</option>
+    </select>
+  </section>
+
+  <section data-sc="shindan">
+    <h2>③ サロンでの見立て</h2>
+    <label class="lb">2つを比べて一言（自動で入ります。直してOK）</label>
+    <textarea id="rgap" oninput="rGapDirty=true;build()"></textarea>
+    <button class="small" onclick="rGapDirty=false;build()">↺ 自動の文に戻す</button>
+    <label class="lb">おうちでできること（1つ）</label>
+    <select id="rcare" onchange="build()"></select>
+    <input type="text" id="rcareFree" placeholder="自分の言葉で書くときはこちら（こちらが優先）" oninput="build()" style="margin-top:6px">
+    <div class="row2">
+      <div><label class="lb">次回の目安</label>
+        <select id="rinterval" onchange="build()">
+          <option value="30">1ヶ月後</option>
+          <option value="45" selected>1ヶ月半後</option>
+          <option value="60">2ヶ月後</option>
+          <option value="90">3ヶ月後</option>
+        </select></div>
+      <div><label class="lb">ご予約が決まったら</label><input type="text" id="rbooked" placeholder="例：12月19日（土）10:00" oninput="build()"></div>
+    </div>
+  </section>
+
+  <section class="care" data-sc="visit">
     <h2>🏠 ホームケア3つ <small>シートの「今夜からの3つ」と同じものを</small></h2>
     <select id="care1" onchange="build()"></select>
     <select id="care2" onchange="build()"></select>
@@ -88,7 +139,7 @@
     <input type="text" id="careFree" placeholder="例：今週は洗い流さないトリートメントを毛先だけに" oninput="build()">
   </section>
 
-  <section data-sc="visit,shindan,month1,month3,month6">
+  <section data-sc="visit,month1,month3,month6">
     <h2>次回の目安と締めのひとこと</h2>
     <label class="lb">次回のご予約が決まっている場合（日時を入力→こちらが優先されます）</label>
     <input type="text" id="bookedAt" placeholder="例：8月7日（金）14:00" oninput="build()">
@@ -126,7 +177,7 @@
 <script>
 const SCENES = [
   {id:"visit",  label:"🌿 来店直後"},
-  {id:"shindan",label:"📊 診断結果を送る"},
+  {id:"shindan",label:"📊 頭皮の結果を送る"},
   {id:"day7",   label:"📅 7日後フォロー"},
   {id:"month1", label:"🗓 1ヶ月お伺い"},
   {id:"month3", label:"🔁 3ヶ月・再来のご案内"},
@@ -151,7 +202,6 @@ const CARES = [
   "地肌からしっかりブラッシングする",
   "たっぷり睡眠をとる",
 ];
-const SCORE_ITEMS = ["頭皮の色","毛穴","皮脂・うるおい","髪の太さ","ハリ・コシ","密度","キューティクル"];
 
 function chips(id, arr, cls=""){
   const el = document.getElementById(id);
@@ -170,16 +220,6 @@ chips('menu', MENUS); chips('nayami', NAYAMI); chips('type', TYPES, 'gold');
   if(i===0) s.selectedIndex = 1;
   if(i===1) s.selectedIndex = 3;
   if(i===2) s.selectedIndex = 4;
-});
-
-const scDiv = document.getElementById('scores');
-SCORE_ITEMS.forEach((t,i)=>{
-  const row=document.createElement('div'); row.className='scoreRow';
-  row.innerHTML = `<span>${t}</span>`;
-  const sel=document.createElement('select'); sel.id='sc'+i;
-  sel.innerHTML = `<option value="">−</option>`+[1,2,3,4,5].map(n=>`<option>${n}</option>`).join('');
-  sel.onchange=build;
-  row.appendChild(sel); scDiv.appendChild(row);
 });
 
 const scenesDiv = document.getElementById('scenes');
@@ -201,6 +241,7 @@ const stars = n => "●".repeat(n)+"○".repeat(5-n);
 const RESERVE = "ご予約はこちらから → https://lita-lab.bionly.net/";
 
 function build(){
+  if(scene==="shindan"){ document.getElementById('preview').textContent = rBuild(); return; }
   const name = document.getElementById('name').value.trim();
   const nm = name ? name+"様\n" : "";
   const menus = on('menu'), nayami = on('nayami'), types = on('type');
@@ -210,8 +251,6 @@ function build(){
   const free = document.getElementById('careFree').value.trim(); if(free) cares.push(free);
   const interval = document.getElementById('interval').value;
   const season = document.getElementById('season').value;
-  const advice = document.getElementById('advice').value.trim();
-  const scores = SCORE_ITEMS.map((t,i)=>({t, v: document.getElementById('sc'+i).value})).filter(x=>x.v);
   const carePart = cares.length ? "\n🏠 今夜からのホームケア\n"+cares.map((c,i)=>marks[i]+" "+c).join("\n")+"\n" : "";
   const seasonPart = season ? season+"\n" : "";
   let t = "";
@@ -225,20 +264,6 @@ function build(){
     if(bookedAt) t += "\n次回のご予約："+bookedAt+" にお待ちしています。\n";
     else if(interval) t += "\n次回は "+interval+"後ごろ がおすすめのタイミングです。\n"+RESERVE+"\n";
     t += "\n気になることがあれば、いつでもこのLINEでご相談ください。\n"+seasonPart;
-  }
-  else if(scene==="shindan"){
-    t = nm + "本日の頭皮・髪の診断結果をお送りします🌿\n\n";
-    if(types.length) t += "【あなたの今のタイプ】\n"+types.join("／")+"\n\n";
-    if(scores.length){
-      t += "【7項目チェック（●の数＝5段階）】\n";
-      scores.forEach(x=>{ t += "・"+x.t+"："+stars(+x.v)+"\n"; });
-      t += "\n";
-    }
-    if(advice) t += "【担当からのアドバイス】\n"+advice+"\n";
-    t += carePart;
-    if(bookedAt) t += "\n次回のご予約："+bookedAt+" ── 同じ項目でチェックして、変化を一緒に見ていきましょう。\n";
-    else if(interval) t += "\n次回は "+interval+"後ごろ、同じ項目でチェックして変化を一緒に見ていきましょう。\n"+RESERVE+"\n";
-    t += "\nご不明な点は、いつでもこのLINEでご相談ください。\n"+seasonPart;
   }
   else if(scene==="day7"){
     t = nm + "ご来店から1週間がたちました🌿\nその後、髪と頭皮の調子はいかがですか？\n\n";
@@ -282,10 +307,159 @@ function fallback(t, ok){
 function resetAll(){
   document.querySelectorAll('.chip.on').forEach(c=>c.classList.remove('on'));
   document.getElementById('name').value=""; document.getElementById('careFree').value=""; document.getElementById('menuFree').value=""; document.getElementById('bookedAt').value="";
-  document.getElementById('advice').value="";
-  SCORE_ITEMS.forEach((t,i)=>{ document.getElementById('sc'+i).value=""; });
+  rReset();
   build();
 }
+
+/* ===== 📊 頭皮の結果を送る（旧「頭皮診断レポート」を組み込んだ・2026-11-12） ===== */
+// HP・LINEの頭皮未来診断と同じ6タイプ・同じ名前
+const RTYPES = [
+  { k:"barrier",  n:"頭皮バリア低下タイプ",         c:"scalp" },
+  { k:"sebum",    n:"皮脂・毛穴詰まりタイプ",       c:"scalp" },
+  { k:"aging",    n:"巡り不足・エイジング頭皮タイプ", c:"scalp" },
+  { k:"moisture", n:"水分不足・パサつきタイプ",     c:"hair" },
+  { k:"frizz",    n:"うねり・広がりタイプ",         c:"hair" },
+  { k:"damage",   n:"ダメージ蓄積タイプ",           c:"hair" },
+];
+const RITEMS = [
+  { n:"頭皮の色",   t:["青白く、透明感があります","ところどころ、黄みがあります","赤みが見えるところがあります"] },
+  { n:"毛穴のつまり", t:["毛穴の輪郭がくっきりしています","毛穴のまわりに、皮脂が少し見えます","皮脂が固まっている毛穴があります"] },
+  { n:"うるおい",   t:["しっとりしています","乾いた角質が少し見えます","毛穴のまわりに、乾いた角質が目立ちます"] },
+  { n:"髪の太さ",   t:["しっかりした太さです","少し細い毛が混じっています","細くなっている毛が目立ちます"] },
+  { n:"1つの毛穴から出ている本数", t:["2〜3本出ている毛穴が多いです","1〜2本しか出ていない毛穴が混じっています","1本だけの毛穴が目立ちます"] },
+];
+const RPTS = [5,4,3,2,1];
+const RREL = { barrier:[0,2], sebum:[1], aging:[3,4] };
+const SHINDAN = "https://lita-lab.com/shindan/";
+const STAFF_KEY = "litalab_shindan_report_staff";
+let rSel = [], rSc = RITEMS.map(()=>null), rPt = RITEMS.map(()=>null), rGapDirty = false;
+function rLvl(p){ return p===null ? null : (p>=4 ? 0 : (p===3 ? 1 : 2)); }
+
+function rDrawTypes(){
+  const el = document.getElementById("rtypes"); el.innerHTML = "";
+  RTYPES.concat([{ k:"none", n:"まだ受けていない" }]).forEach(t=>{
+    const c = document.createElement("div"); const i = rSel.indexOf(t.k);
+    c.className = "chip" + (t.k==="none" ? " none" : "") + (i>=0 ? " on" : "");
+    c.innerHTML = t.n + (i===0 && t.k!=="none" ? '<span class="bd">メイン</span>' : i===1 ? '<span class="bd">サブ</span>' : "");
+    c.onclick = ()=>{
+      if (t.k==="none") { rSel = (rSel[0]==="none") ? [] : ["none"]; }
+      else {
+        rSel = rSel.filter(x=>x!=="none");
+        const j = rSel.indexOf(t.k);
+        if (j>=0) rSel.splice(j,1); else { if (rSel.length>=2) rSel[1] = t.k; else rSel.push(t.k); }
+      }
+      rDrawTypes(); build();
+    };
+    el.appendChild(c);
+  });
+}
+function rDrawScores(){
+  const el = document.getElementById("rscores"); el.innerHTML = "";
+  RITEMS.forEach((it,i)=>{
+    const row = document.createElement("div"); row.className = "scrow";
+    const nm = document.createElement("div"); nm.className = "nm";
+    nm.innerHTML = it.n + '<span class="now">' + (rSc[i]===null ? "（未入力＝LINEに出しません）" : rPt[i] + "点：" + it.t[rSc[i]]) + "</span>";
+    row.appendChild(nm);
+    const hi = document.createElement("span"); hi.className = "hi"; hi.textContent = "すこやか"; row.appendChild(hi);
+    RPTS.forEach(v=>{
+      const b = document.createElement("button");
+      b.className = "mk" + (rPt[i]===v ? " on" : ""); b.textContent = v;
+      b.onclick = ()=>{ rPt[i] = (rPt[i]===v) ? null : v; rSc[i] = rLvl(rPt[i]); rDrawScores(); build(); };
+      row.appendChild(b);
+    });
+    const lo = document.createElement("span"); lo.className = "lo"; lo.textContent = "伸びしろ"; row.appendChild(lo);
+    el.appendChild(row);
+  });
+}
+document.getElementById("rcare").innerHTML = '<option value="">（選ぶ）</option>' + CARES.map(c=>"<option>"+c+"</option>").join("");
+function rTname(k){ return RTYPES.find(t=>t.k===k) || null; }
+function rNames(idx){ return idx.map(i=>"「"+RITEMS[i].n+"」").join("と"); }
+
+function rAutoGap(){
+  const filled = []; rSc.forEach((v,i)=>{ if (v!==null) filled.push(i); });
+  const bad = filled.filter(i=>rSc[i]===2);
+  const main = (rSel[0] && rSel[0]!=="none") ? rTname(rSel[0]) : null;
+  if (!main) {
+    if (bad.length) return "今日は" + rNames(bad) + "が、これから良くしていけるところでした。ここを一緒に整えていきましょうね。";
+    if (filled.length && filled.every(i=>rSc[i]===0)) return "今日の頭皮は、すこやかな状態でした！この状態を、一緒に保っていきましょうね。";
+    if (filled.length) return "今日の頭皮は、まずまずの状態でした。ここから一緒に、もう一歩すこやかにしていきましょうね。";
+    return "";
+  }
+  const rel = [];
+  rSel.forEach(k=>{ (RREL[k]||[]).forEach(i=>{ if (rel.indexOf(i)<0) rel.push(i); }); });
+  const relFilled = rel.filter(i=>rSc[i]!==null);
+  const relBad = relFilled.filter(i=>rSc[i]===2), relGood = relFilled.filter(i=>rSc[i]===0), relMid = relFilled.filter(i=>rSc[i]===1);
+  const others = bad.filter(i=>rel.indexOf(i)<0);
+  let s = "";
+  if (main.c==="hair" && !rel.length) {
+    s = "頭皮未来診断は、髪のタイプ「" + main.n + "」でした。";
+    if (bad.length) s += "頭皮では" + rNames(bad) + "が、これから良くしていけるところでした。髪と頭皮、一緒に整えていきましょうね。";
+    else if (filled.length) s += (filled.every(i=>rSc[i]===0) ? "頭皮はすこやかな状態でした。" : "頭皮はまずまずの状態でした。") + "いい頭皮から、いい髪を一緒に育てていきましょうね。";
+    return s;
+  }
+  const ref = main.c==="scalp" ? main : rTname(rSel[1]);
+  if (relBad.length) s = "頭皮未来診断の「" + ref.n + "」のとおり、マイクロスコープでも" + rNames(relBad) + "に同じ傾向が見えました。";
+  else if (relGood.length) s = "頭皮未来診断は「" + ref.n + "」でしたが、" + rNames(relGood) + "は思っていたより、すこやかでした。";
+  else if (relMid.length) s = "頭皮未来診断は「" + ref.n + "」でしたが、" + rNames(relMid) + "はまずまずの状態でした。";
+  if (others.length) s += "未来診断では出ていなかった" + rNames(others) + "も、今日見てみると、これから良くしていけるところでした。";
+  if (s && (relBad.length || others.length)) s += "ここを一緒に整えていきましょうね。";
+  return s;
+}
+function rNextDate(days){
+  const d = document.getElementById("rdate").value;
+  const base = d ? new Date(d + "T00:00:00") : new Date();
+  base.setDate(base.getDate() + days);
+  if (base.getDay()===0) base.setDate(base.getDate() - 1); // 日曜は定休日＝前の土曜へ
+  return (base.getMonth()+1) + "月" + base.getDate() + "日（" + "日月火水木金土".charAt(base.getDay()) + "）";
+}
+function rBuild(){
+  const gapEl = document.getElementById("rgap");
+  if (!rGapDirty) gapEl.value = rAutoGap();
+  const name = document.getElementById("name").value.trim();
+  const staff = document.getElementById("rstaff").value.trim();
+  const care = document.getElementById("rcareFree").value.trim() || document.getElementById("rcare").value;
+  const booked = document.getElementById("rbooked").value.trim();
+  const days = +document.getElementById("rinterval").value;
+  const photos = +document.getElementById("rphotos").value;
+  let t = (name ? name + "様\n" : "") + "今日はご来店ありがとうございました🌿\n今日見た頭皮の様子を、まとめてお送りしますね。おうちでゆっくり見返してみてください。\n\n";
+  t += "🌱 あなたの頭皮未来診断\n";
+  if (rSel[0]==="none" || !rSel.length) {
+    t += "まだでしたら、ぜひこちらから受けてみてくださいね！24問、スマホで答えられます。\n" + SHINDAN + "\n次回、今日の頭皮と並べて一緒に見てみましょう。\n\n";
+  } else {
+    t += "「" + rTname(rSel[0]).n + "」でした。\n";
+    if (rSel[1]) t += "（もう1つ近かったのは「" + rTname(rSel[1]).n + "」）\n";
+    t += "ご自身でチェックしてくださった結果です。\n\n";
+  }
+  const filled = []; rSc.forEach((v,i)=>{ if (v!==null) filled.push(i); });
+  if (filled.length) {
+    t += "🔍 今日の頭皮（マイクロスコープで見た結果）\n";
+    filled.forEach(i=>{ t += "・" + RITEMS[i].n + "　" + rPt[i] + "点\n　" + RITEMS[i].t[rSc[i]] + "\n"; });
+    t += "5点がすこやか、1点は「これから良くしていけるところ」です。点数が低いところも、一緒に上げていきましょうね。\n\n";
+  }
+  const gap = gapEl.value.trim();
+  if (gap) t += "💬 サロンから\n" + gap + "\n\n";
+  if (care) t += "🏠 おうちでできること\n" + care + "\nまずはこれ1つだけ、続けてみてくださいね。\n\n";
+  if (booked) t += "📅 次回のご予約\n" + booked + " にお待ちしていますね。\n同じところをもう一度見て、変化を一緒に確かめましょう！\n\n";
+  else t += "📅 次回は\n" + rNextDate(days) + "ごろがおすすめです。\n同じところをもう一度見て、変化を一緒に確かめましょう！\n" + RESERVE + "\n\n";
+  if (photos) t += "このあと、今日一緒に見た頭皮の写真を" + photos + "枚お送りしますね📷\n";
+  t += "気になることがあれば、いつでもこのLINEで気軽にご相談くださいね。\n";
+  t += (staff ? staff + "より\n" : "") + "Lita-lab";
+  return t;
+}
+function rSaveStaff(){ try { localStorage.setItem(STAFF_KEY, document.getElementById("rstaff").value); } catch(e){} }
+function rReset(){
+  ["rbooked","rcareFree","rgap"].forEach(id=>{ document.getElementById(id).value = ""; });
+  document.getElementById("rcare").value = "";
+  document.getElementById("rinterval").value = "45";
+  document.getElementById("rphotos").value = "2";
+  document.getElementById("rdate").valueAsDate = new Date();
+  rSel = []; rSc = RITEMS.map(()=>null); rPt = RITEMS.map(()=>null); rGapDirty = false;
+  rDrawTypes(); rDrawScores();
+}
+try { document.getElementById("rstaff").value = localStorage.getItem(STAFF_KEY) || ""; } catch(e){}
+document.getElementById("rdate").valueAsDate = new Date();
+rDrawTypes(); rDrawScores();
+
 showSections(); build();
 </script>
 </body>
