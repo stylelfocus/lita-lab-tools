@@ -99,6 +99,11 @@
 
   <section data-sc="shindan">
     <h2>② マイクロスコープで見た結果 <small>5点＝すこやか　3点＝まずまず　1点＝ここが伸びしろ</small></h2>
+    <div style="display:flex;gap:6px;align-items:center;margin-bottom:4px">
+      <input type="text" id="rpaste" placeholder="サロン版の点数を貼る（例：色3 毛穴2 うるおい2 太さ3 本数2）" style="flex:1;min-width:0">
+      <button class="small" onclick="rPaste()" style="white-space:nowrap">入れる</button>
+    </div>
+    <p class="hint" id="rpasteMsg" style="display:none;font-weight:700"></p>
     <div id="rscores"></div>
     <p class="hint red">「皮膚科へのご案内」の①〜⑤（赤み＋痛み・しみる／毛穴が見えない／丸く抜けている・短く切れた毛／赤くジュクジュク・フケが多い／広がる出来物／全体にまだら＋体調不良が続く）が見えたときは、ここには書かず、ご案内の言葉で口頭で。</p>
     <label class="lb">LINEに添える写真</label>
@@ -446,8 +451,27 @@ function rBuild(){
   t += (staff ? staff + "より\n" : "") + "Lita-lab";
   return t;
 }
+// 2026-11-16：頭皮診断（サロン版）の「📋 LINE用に点数をコピー」を貼ると、5項目の点が入る。
+// 並び＝頭皮の色・毛穴のつまり・うるおい・髪の太さ・本数。数字5つ（1〜5）だけを読む。
+function rPaste(){
+  const el = document.getElementById("rpaste"), msg = document.getElementById("rpasteMsg");
+  const raw = el.value.replace(/[０-９]/g, c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0)).replace(/頭皮\s*5\s*項目/, "");
+  const d = raw.match(/\d/g) || [];
+  msg.style.display = "block";
+  if (d.length!==5 || d.some(x=>+x<1 || +x>5)) {
+    msg.style.color = "#b0413e";
+    msg.textContent = "🔴 読み取れませんでした（1〜5の数字が5つ必要です）。下のボタンで選んでください。";
+    return;
+  }
+  d.forEach((x,i)=>{ rPt[i] = +x; rSc[i] = rLvl(rPt[i]); });
+  msg.style.color = "#3d7a55";
+  msg.textContent = "✅ 5項目を入れました：" + RITEMS.map((it,i)=>it.n + " " + rPt[i] + "点").join("／");
+  el.value = "";
+  rDrawScores(); build();
+}
 function rSaveStaff(){ try { localStorage.setItem(STAFF_KEY, document.getElementById("rstaff").value); } catch(e){} }
 function rReset(){
+  document.getElementById("rpaste").value = ""; document.getElementById("rpasteMsg").style.display = "none";
   ["rbooked","rcareFree","rgap"].forEach(id=>{ document.getElementById(id).value = ""; });
   document.getElementById("rcare").value = "";
   document.getElementById("rinterval").value = "45";

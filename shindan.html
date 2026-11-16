@@ -221,6 +221,12 @@ body{font-family:'Noto Sans JP','Hiragino Kaku Gothic Pro',sans-serif;background
     <div class="staff-box" id="staff-note"></div>
     <div class="cta-buttons no-print">
       <button class="btn-primary" onclick="preparePrint(); window.print();">この内容を印刷する</button>
+      <button class="btn-sub" onclick="copyForLine()">📋 LINE用に点数をコピー</button>
+      <div id="line-out" style="display:none;background:#fff;border:1.5px solid #d9b8c0;border-radius:12px;padding:14px;text-align:left;font-size:15px;line-height:1.7;">
+        <div id="line-msg" style="font-weight:700;margin-bottom:6px;"></div>
+        <div id="line-code" style="font-size:19px;font-weight:700;letter-spacing:.04em;user-select:all;-webkit-user-select:all;"></div>
+        <div style="font-size:13px;color:#8a7d82;margin-top:6px;">LINEフォロー文メーカーの「📊 頭皮の結果を送る」→「サロン版の点数を貼る」に貼ると、5項目が入ります。</div>
+      </div>
       <button class="btn-sub" onclick="restartQuiz()">はじめからやり直す</button>
     </div>
     <p class="draft-note">※タイプ判定ロジックは初版（v0.1）です。基準は現在調整中です。</p>
@@ -512,6 +518,24 @@ function preparePrint(){
   document.getElementById('p-scores').innerHTML = ['color','pore','moisture','hari','vol'].map(function(k){return '<td>'+s[k]+'</td>';}).join('') + '<td>'+state.lifeChecked.length+'/5</td>';
 }
 
-function restartQuiz(){ document.getElementById('cust-name').value=''; showScreen('screen-intro'); }
+// 2026-11-16：同じ5項目をLINEフォロー文メーカーでもう一度選ばなくて済むように、点数だけを渡す。
+// 文章はここには置かない（お客様に送る文はLINEフォロー文メーカーの中だけ）。
+function copyForLine(){
+  var s = state.scalpScores;
+  var code = '頭皮5項目 色' + s.color + ' 毛穴' + s.pore + ' うるおい' + s.moisture + ' 太さ' + s.hari + ' 本数' + s.vol;
+  var box = document.getElementById('line-out'), msg = document.getElementById('line-msg');
+  document.getElementById('line-code').textContent = code;
+  box.style.display = 'block';
+  function ok(){ msg.textContent = '✅ コピーしました'; msg.style.color = '#3d7a55'; }
+  function ng(){ msg.textContent = '🔴 コピーできませんでした。下の文字を長押しして選んで、コピーしてください'; msg.style.color = '#b0413e'; }
+  function fb(){
+    var ta = document.createElement('textarea'); ta.value = code; document.body.appendChild(ta); ta.select();
+    var done = false; try { done = document.execCommand('copy'); } catch(e){}
+    document.body.removeChild(ta); if (done) ok(); else ng();
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(ok, fb); else fb();
+}
+
+function restartQuiz(){ document.getElementById('line-out').style.display='none';  document.getElementById('cust-name').value=''; showScreen('screen-intro'); }
 </script>
 </body></html>
