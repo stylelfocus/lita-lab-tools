@@ -120,6 +120,22 @@ body{font-family:'Noto Sans JP','Hiragino Kaku Gothic Pro',sans-serif;background
 .p-table{width:100%;border-collapse:collapse;font-size:11.5px;margin-bottom:14px;}
 .p-table th,.p-table td{border:1px solid #e8e2e0;padding:5px 7px;text-align:left;}
 .p-table th{background:#faf3f5;color:#a85a78;}
+
+/* ===== iPad（横幅700px以上）＝サロンで使うとき。字と絵を大きくする
+       2026-11-16 莉沙「頭皮と髪の診断のサロン版をLita-labのiPadで使えるようのデータにして」
+       ＋ 莉沙「文字大きめ」 ===== */
+@media (min-width:700px){
+  .app{max-width:720px;}
+  .q-phase{font-size:13px;padding:4px 13px;border-radius:14px;margin-bottom:12px;}
+  .q-title{font-size:27px;margin-bottom:6px;}
+  .q-sub{font-size:16px;line-height:1.75;margin-bottom:20px;}
+  .lv-btn{gap:18px;padding:18px;border-radius:14px;}
+  .lv-ill{width:88px;height:88px;border-radius:10px;}
+  .lv-score{font-size:18px;margin-right:10px;}
+  .lv-text{font-size:17px;line-height:1.6;margin-top:4px;}
+  .check-item{font-size:17px;}
+  .q-next{font-size:19px;padding:20px;}
+}
 </style>
 </head>
 <body>
