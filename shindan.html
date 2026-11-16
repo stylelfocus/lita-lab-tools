@@ -227,8 +227,8 @@ body{font-family:'Noto Sans JP','Hiragino Kaku Gothic Pro',sans-serif;background
       <tbody><tr><td id="p-menus"></td><td id="p-products"></td></tr></tbody>
     </table>
     <table class="p-table">
-      <thead><tr><th colspan="7">頭皮7項目スコア（採点日記録用）</th></tr>
-      <tr><th>色つや</th><th>毛穴</th><th>皮脂</th><th>うるおい</th><th>ハリコシ</th><th>ボリューム</th><th>生活リズム</th></tr></thead>
+      <thead><tr><th colspan="6">頭皮5項目スコア＋生活リズム（採点日記録用）</th></tr>
+      <tr><th>頭皮の色</th><th>毛穴のつまり</th><th>うるおい</th><th>髪の太さ</th><th>本数</th><th>生活リズム</th></tr></thead>
       <tbody><tr id="p-scores"></tr></tbody>
     </table>
     <p style="font-size:10.5px;color:#9a8f93;">※本表は美容上のお手入れ目安です。炎症等の所見がある場合は医療機関へのご相談をご案内しています。判定ロジックは初版のため、確定基準は毛髪診断士の校正後に更新されます。</p>
@@ -237,7 +237,7 @@ body{font-family:'Noto Sans JP','Hiragino Kaku Gothic Pro',sans-serif;background
 
 <script>
 // ============================================================
-// 頭皮7項目 採点基準（v0.1）
+// 頭皮5項目 採点基準（2026-11-16：カルテ・LINEの結果・頭皮コンディション見本表と同じ5項目にそろえた）
 // ============================================================
 function svgWrap(inner, bg){ return '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="'+bg+'"/>'+inner+'</svg>'; }
 function hairs(n,w,sway,cx){ var out="",gap=6,start=cx-(n-1)*gap/2; for(var i=0;i<n;i++){var x=start+i*gap,s=(i%2?sway:-sway); out+='<path d="M'+x+' 78 C '+(x+s)+' 50, '+(x-s)+' 30, '+(x+s*1.5)+' 8" stroke="#6b5a52" stroke-width="'+w+'" fill="none" stroke-linecap="round"/>';} return out; }
@@ -250,31 +250,29 @@ function illHari(lv){var ws=[[2.6,2.6,2.4],[2.3,2.2,2.2],[2.3,1.5,2.2],[1.6,1.3,
 function illVol(lv){var groups=[[3,3,2],[2,2,2],[2,1,1],[1,1,1],[1,0,1]][lv-1]; var out="",xs=[26,50,74]; for(var g=0;g<3;g++){out+='<circle cx="'+xs[g]+'" cy="80" r="5" fill="#e9dbd4" stroke="#cbb6ab" stroke-width="1"/>'; if(groups[g]>0)out+=hairs(groups[g],1.9,3.5,xs[g]);} return svgWrap(out, SCALPS[lv<=2?0:1]); }
 
 var SCALP_ITEMS = [
-  { id:'color', title:'1. 頭皮の色つや', sub:'マイクロスコープ or 目視。青白い＝健やか、黄み・赤みは要ケアサイン。', ill:illColor,
-    tx:['青白く透明感がある（毛根が透けて見える健やかな状態）','おおむね青白いが、部分的にくすみ・黄ばみ','全体に黄ばみ（皮脂の酸化・ターンオーバーの乱れサイン）','部分的に赤み（血行不良・こすれ・カラー刺激など）','広範囲の赤み・炎症のサイン（美容の範囲を超える所見は医療機関をご案内）'] },
-  { id:'pore', title:'2. 毛穴の状態', sub:'マイクロスコープ。理想は1穴から毛が束で立ち上がる状態。', ill:illPore,
-    tx:['毛穴の輪郭がくっきり。詰まりなし、1穴から毛が束で立ち上がる','わずかに皮脂・角質が見えるが毛の立ち上がりは良い','毛穴の周りに皮脂または角質の付着が目立つ','半分以上ふさがって見える毛穴がところどころにある','多くの毛穴がふさがっている（脂漏性/乾燥性レベル2相当）'] },
-  { id:'sebum', title:'3. 皮脂バランス', sub:'マイクロスコープ＋手触り。', ill:illSebum,
-    tx:['適度なつや。ベタつきもカサつきもない','部分的（前頭部・つむじ等）に皮脂多め','毛穴に水たまり状の皮脂が見える（脂漏性レベル1）','広範囲のベタつき・脂性フケ','酸化して固まった皮脂・強いベタつき・においを伴う'] },
-  { id:'moisture', title:'4. うるおい', sub:'マイクロスコープ＋手触り。', ill:illDry,
-    tx:['しっとりなめらか。フケ・カサつきなし','やや乾燥・シャンプー後のつっぱり感の自覚あり','毛穴の周りに乾いた角質が見える（乾燥性レベル1）','小さく白いカサカサのフケ（乾燥フケ）がパラパラ出る','白い塊状の角質・大量の乾燥フケ（乾燥性レベル2）'] },
-  { id:'hari', title:'5. ハリ・コシ（毛の太さ）', sub:'基準値：日本人女性平均 約0.07〜0.08mm。', ill:illHari,
-    tx:['全体にしっかりした太さ。根元から立ち上がる','平均的な太さ（0.07mm前後）。気になる細さなし','部分的に細い毛・短い毛が混じり始めている','細い毛が目立つ。トップがつぶれやすい','広い範囲で軟毛化（0.04mm未満の毛が多い）'] },
-  { id:'vol', title:'6. ボリューム（密度・毛群）', sub:'理想は1つの毛穴から2〜3本、頭頂部の密度 約300本/cm²。', ill:illVol,
-    tx:['1穴2〜3本の毛穴が多く、地肌がほぼ見えない','1穴2本が中心。分け目は普通','1穴1〜2本が混在。分け目がやや広く感じる','1穴1本の毛穴が目立つ。分け目・つむじの地肌が透ける','毛が生えていない毛穴がある。地肌が広く見える'] },
+  { id:'color', title:'1. 頭皮の色', sub:'健やかな頭皮は、毛根が透けてうっすら青白く見えます。', ill:illColor,
+    tx:['青白く、透明感があります','おおむね青白く、ところどころ軽いくすみ','ところどころ、黄みがあります','部分的に赤みがあります','赤みが見えるところが広めです'] },
+  { id:'pore', title:'2. 毛穴のつまり', sub:'理想は、毛穴の輪郭がくっきり見えて、毛が元気に立ち上がっている状態です。皮脂は頭皮を守る大切なもの。多すぎず少なすぎずが理想です。', ill:illPore,
+    tx:['毛穴の輪郭がくっきりしています','うっすら皮脂があるが、毛は元気に立ち上がっています','毛穴のまわりに、皮脂が少し見えます','皮脂や角質で、ふさがりかけた毛穴があります','皮脂が固まっている毛穴があります'] },
+  { id:'moisture', title:'3. うるおい', sub:'乾燥が進むと、白く細かいフケやかゆみのもとになります。', ill:illDry,
+    tx:['しっとりしています','やや乾燥ぎみ。洗ったあとにつっぱり感','乾いた角質が少し見えます','白く細かいフケが出やすい状態です','毛穴のまわりに、乾いた角質が目立ちます'] },
+  { id:'hari', title:'4. 髪の太さ', sub:'日本人女性の平均は約0.07〜0.08mm。年齢とともに細くなりやすいところです。', ill:illHari,
+    tx:['しっかりした太さです','平均的な太さです','少し細い毛が混じっています','細い毛が目立ち、トップがつぶれやすい状態です','細くなっている毛が多く見えます'] },
+  { id:'vol', title:'5. 1つの毛穴から出ている本数', sub:'理想は、1つの毛穴から2〜3本の毛が出ている状態です。', ill:illVol,
+    tx:['2〜3本出ている毛穴が多いです','2本の毛穴が中心です','1〜2本しか出ていない毛穴が混じっています','1本だけの毛穴が増えています','1本だけの毛穴が目立ちます'] },
 ];
 var LIFE_CHECKS = [
   '睡眠6時間以上とれている','食事のバランス（タンパク質を意識）ができている',
   '強いストレスが続いていない','紫外線・ドライヤー熱への配慮ができている','シャンプー・すすぎが丁寧（爪を立てない等）'
 ];
 
-// 髪クイックチェック3項目（お客様への簡易触診・目視。頭皮7項目とは別軸）
+// 髪クイックチェック3項目（お客様への簡易触診・目視。頭皮5項目とは別軸）
 var HAIR_ITEMS = [
-  { id:'hDry', title:'8. 髪のうるおい・手触り', sub:'毛先を中心に手触りを確認。',
+  { id:'hDry', title:'7. 髪のうるおい・手触り', sub:'毛先を中心に手触りを確認。',
     tx:['しっとりなめらか。パサつきなし','平均的。気になるパサつきはなし','毛先を中心にややパサつきを感じる','広範囲にパサつき・うねりが出やすい','かなり乾燥し、まとまりにくい状態'] },
-  { id:'hAging', title:'9. 髪のハリ・コシ', sub:'指通し・立ち上がりで確認。',
+  { id:'hAging', title:'8. 髪のハリ・コシ', sub:'指通し・立ち上がりで確認。',
     tx:['しっかりコシがあり根元から立ち上がる','平均的なコシがある','ややコシ不足を感じる','コシが弱く、ぺたんとしやすい','コシがかなり弱く、ふんわり感が出にくい'] },
-  { id:'hDamage', title:'10. ダメージ・枝毛', sub:'毛先・カラー履歴と合わせて確認。',
+  { id:'hDamage', title:'9. ダメージ・枝毛', sub:'毛先・カラー履歴と合わせて確認。',
     tx:['ダメージなし。毛先まで健康的','軽微なダメージのみ','部分的に枝毛・パサつきが見られる','広範囲にダメージ・ゴワつきがある','かなりのダメージ蓄積が見られる'] },
 ];
 
@@ -355,7 +353,7 @@ function renderStep(){
 
   if (s.phase === 'life') {
     document.getElementById('q-phase').textContent = '頭皮｜カウンセリング';
-    document.getElementById('q-title').textContent = '7. 生活リズム';
+    document.getElementById('q-title').textContent = '6. 生活リズム';
     document.getElementById('q-sub').textContent = '当てはまるものにチェック（記録用。タイプ判定には使用しません）';
     body.innerHTML = '<div class="check-grid" id="life-grid"></div><button class="btn-primary q-next" onclick="nextStep()">次へ →</button>';
     var grid = document.getElementById('life-grid');
@@ -415,7 +413,8 @@ function calculateAndShow(){
   setTimeout(function(){
     var s = state.scalpScores, h = state.hairScores;
     var dry   = 6 - s.moisture;
-    var oily  = ((6-s.pore) + (6-s.sebum) + (s.color===3?2:0)) / (s.color===3?3:2);
+    // 2026-11-16：項目を5つにそろえたので「皮脂バランス」は「毛穴のつまり」に吸収
+    var oily  = ((6-s.pore) + (s.color===3?2:0)) / (s.color===3?2:1);
     var aging = ((6-s.hari) + (6-s.vol)) / 2;
     var sens  = s.color<=2 ? (6-s.color) : 0;
     var scalpScores = {scalpDry:dry, scalpOily:oily, scalpAging:aging, scalpSens:sens};
@@ -475,7 +474,7 @@ function showRecommend(){
   }).join('');
   var lifeCount = state.lifeChecked.length;
   document.getElementById('staff-note').innerHTML =
-    '<b>スタッフ記録</b>：生活リズム '+lifeCount+'/5　｜　頭皮スコア 色つや'+state.scalpScores.color+' 毛穴'+state.scalpScores.pore+' 皮脂'+state.scalpScores.sebum+' うるおい'+state.scalpScores.moisture+' ハリコシ'+state.scalpScores.hari+' ボリューム'+state.scalpScores.vol+'　｜　次回は同じ場所（頭頂部・つむじ横・襟足上）で撮影し経過比較を。';
+    '<b>スタッフ記録</b>：生活リズム '+lifeCount+'/5　｜　頭皮スコア 色'+state.scalpScores.color+' 毛穴のつまり'+state.scalpScores.pore+' うるおい'+state.scalpScores.moisture+' 髪の太さ'+state.scalpScores.hari+' 本数'+state.scalpScores.vol+'　｜　次回は同じ場所（頭頂部・つむじ横・襟足上）で撮影し経過比較を。';
   showScreen('screen-recommend');
 }
 
@@ -494,7 +493,7 @@ function preparePrint(){
   document.getElementById('p-menus').textContent = menus.map(function(m){return m.name;}).join(' / ');
   document.getElementById('p-products').textContent = [scalp.shampoo, hair.treatment, diagResult.worstPlus].filter(function(v,i,a){return a.indexOf(v)===i;}).join(' / ');
   var s = state.scalpScores;
-  document.getElementById('p-scores').innerHTML = ['color','pore','sebum','moisture','hari','vol'].map(function(k){return '<td>'+s[k]+'</td>';}).join('') + '<td>'+state.lifeChecked.length+'/5</td>';
+  document.getElementById('p-scores').innerHTML = ['color','pore','moisture','hari','vol'].map(function(k){return '<td>'+s[k]+'</td>';}).join('') + '<td>'+state.lifeChecked.length+'/5</td>';
 }
 
 function restartQuiz(){ document.getElementById('cust-name').value=''; showScreen('screen-intro'); }
