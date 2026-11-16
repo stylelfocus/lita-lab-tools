@@ -391,14 +391,18 @@ function renderStep(){
   body.innerHTML = html;
 }
 
+// 🔴 2026-11-16 修正：7問目（生活リズム）の「次へ」が押しても動かなかった。
+// 原因＝ボタンが nextStep() を呼んでいたが、その関数がどこにも無かった（JSが止まる）。
+function nextStep(){
+  if (state.step < STEPS.length-1) { state.step++; renderStep(); }
+  else { calculateAndShow(); }
+}
+
 function selectScore(phase, id, lv){
   var map = phase==='scalp' ? state.scalpScores : state.hairScores;
   map[id] = lv;
   renderStep();
-  setTimeout(function(){
-    if (state.step < STEPS.length-1) { state.step++; renderStep(); }
-    else { calculateAndShow(); }
-  }, 260);
+  setTimeout(nextStep, 260);
 }
 
 function goBack(){ if (state.step>0){ state.step--; renderStep(); } }
