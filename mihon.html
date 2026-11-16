@@ -45,12 +45,31 @@
   .toolbar button { font-family:inherit; font-size:13px; background:#C8848C; color:#fff; border:0; padding:9px 18px; border-radius:6px; cursor:pointer; }
   .toolbar .tnote { color:#bcaeb2; }
 
+  /* ===== 印刷＝A4たて1枚にちょうど収まる形（画面の見た目は変えていない） ===== */
+  @page { size:A4 portrait; margin:7mm 7mm 6mm; }
   @media print {
     body { background:#fff; padding:0; }
+    .wrap { max-width:none; width:196mm; margin:0; padding:0; }
     .toolbar, .ph .hint, .ph .del { display:none !important; }
-    .item { break-inside:avoid; }
-    .cells { overflow:visible; }
-    .cell { flex:1 1 0; }
+
+    .head { padding-bottom:4px; margin-bottom:3px; border-bottom-width:1.5px; }
+    .logo { font-size:18px; }
+    .title { font-size:12px; letter-spacing:1px; }
+    .lead { font-size:9.5px; line-height:1.5; margin:5px 0 6px; }
+
+    .item { break-inside:avoid; margin-bottom:4px; padding:5px 6px 4px; border-radius:8px; }
+    .item h2 { font-size:13px; margin:0 0 1px; }
+    .item .sub { font-size:10px; line-height:1.45; margin:0 0 3px; }
+
+    .cells { gap:3px; overflow:visible; padding-bottom:0; }
+    .cell { flex:1 1 0; min-width:0; border-radius:6px; }
+    .cell .lv { padding:1px 4px; }
+    .cell .lv .n { font-size:9.5px; }
+    .cell .lv .tag { font-size:7.5px; }
+    .ph { aspect-ratio:2.6; }
+    .cell .tx { font-size:11.5px; line-height:1.4; padding:4px 4px 5px; }
+
+    .note { padding:6px 9px; font-size:8.5px; line-height:1.5; border-radius:8px; }
   }
 </style>
 </head>
@@ -60,27 +79,16 @@
     <div class="logo">Lita-lab</div>
     <div class="title">頭皮コンディション 見本表</div>
   </div>
-  <p class="lead">マイクロスコープで見た頭皮の状態を、5つの段階でご覧いただけます。<br>
+  <p class="lead">マイクロスコープで見た頭皮の状態を、5つの項目・5点満点でご覧いただけます。<br>
   「今どのあたりか」「これからどこを目指すか」を一緒に確認するための表です。</p>
 
   <div id="items"></div>
-
-  <div class="item">
-    <h2>7. 生活リズム</h2>
-    <p class="sub">カウンセリングでお伺いする5つのポイント。当てはまる数がそのまま点数の目安になります。</p>
-    <div class="liferow">
-      <div class="lifechip"><b>①睡眠</b><br>6時間以上とれている</div>
-      <div class="lifechip"><b>②食事</b><br>タンパク質を意識できている</div>
-      <div class="lifechip"><b>③ストレス</b><br>強いストレスが続いていない</div>
-      <div class="lifechip"><b>④紫外線・熱</b><br>帽子・ドライヤーの距離など配慮あり</div>
-      <div class="lifechip"><b>⑤洗い方</b><br>爪を立てず、すすぎまで丁寧</div>
-    </div>
-  </div>
 
   <div class="note">
     <b>この表について</b><br>
     ・基準は日本毛髪科学協会の公開データ（毛の太さ 日本人平均0.07〜0.08mm、理想は1つの毛穴から2〜3本 など）と、頭皮専門クリニックの公開判定をもとに、毛髪診断士が監修しています。<br>
     ・イラストはイメージです。各マスをタップすると、当サロンのマイクロスコープ実画像（掲載許可をいただいたもの）に差し替えられます。<br>
+    ・5点＝すこやか、3点＝まずまず、1点＝ここが伸びしろ（これから良くしていけるところ）です。LINEでお送りする結果と同じ点数です。<br>
     ・本表は美容上のお手入れの目安です。炎症など気になる症状がある場合は医療機関にご相談ください。
   </div>
 </div>
@@ -93,54 +101,46 @@
 <script>
 // ============ データ ============
 var ITEMS = [
-  { id:"color", name:"1. 頭皮の色つや",
+  { id:"color", name:"1. 頭皮の色",
     sub:"健やかな頭皮は、毛根が透けてうっすら青白く見えます。",
     tx:[
-      "青白く透明感がある、理想的な状態",
-      "おおむね青白く、部分的に軽いくすみ",
-      "全体に黄ばみ。皮脂の酸化・生まれ変わりの乱れのサイン",
-      "部分的に赤み。血行や刺激のケアをしたい状態",
-      "広い範囲に赤み。いたわりのケアの始めどき" ] },
-  { id:"pore", name:"2. 毛穴の状態",
-    sub:"理想は、毛穴の輪郭がくっきり見えて、毛が束になって立ち上がっている状態。",
+      "青白く、透明感があります",
+      "おおむね青白く、ところどころ軽いくすみ",
+      "ところどころ、黄みがあります",
+      "部分的に赤みがあります",
+      "赤みが見えるところが広めです" ] },
+  { id:"pore", name:"2. 毛穴のつまり",
+    sub:"理想は、毛穴の輪郭がくっきり見えて、毛が元気に立ち上がっている状態です。皮脂は頭皮を守る大切なもの。多すぎず少なすぎずが理想です。",
     tx:[
-      "輪郭くっきり。詰まりがなく毛が元気に立ち上がる",
-      "うっすら皮脂があるが、立ち上がりは良い",
-      "毛穴のまわりに皮脂・角質の付着が目立つ",
-      "半分ふさがって見える毛穴がところどころに",
-      "多くの毛穴がふさがり、毛が出にくい状態" ] },
-  { id:"sebum", name:"3. 皮脂バランス",
-    sub:"皮脂は頭皮を守る大切なもの。多すぎず少なすぎずが理想です。",
-    tx:[
-      "適度なつや。ベタつきもカサつきもなし",
-      "前髪の生え際やつむじなど、部分的に皮脂多め",
-      "毛穴に水たまりのような皮脂が見える",
-      "広い範囲にベタつき。脂っぽいフケが出ることも",
-      "固まった皮脂が目立つ。しっかりリセットしたい状態" ] },
-  { id:"dry", name:"4. うるおい",
+      "毛穴の輪郭がくっきりしています",
+      "うっすら皮脂があるが、毛は元気に立ち上がっています",
+      "毛穴のまわりに、皮脂が少し見えます",
+      "皮脂や角質で、ふさがりかけた毛穴があります",
+      "皮脂が固まっている毛穴があります" ] },
+  { id:"dry", name:"3. うるおい",
     sub:"乾燥が進むと、白く細かいフケやかゆみのもとになります。",
     tx:[
-      "しっとりなめらか。フケ・カサつきなし",
-      "やや乾燥ぎみ。洗髪後につっぱり感",
-      "毛穴のまわりに乾いた角質がちらほら",
-      "白く細かいフケがパラパラと出やすい",
-      "白い角質のかたまりが広がっている状態" ] },
-  { id:"hari", name:"5. ハリ・コシ（毛の太さ）",
-    sub:"日本人女性の平均は約0.07〜0.08mm。年齢とともに細くなりやすい部分です。",
+      "しっとりしています",
+      "やや乾燥ぎみ。洗ったあとにつっぱり感",
+      "乾いた角質が少し見えます",
+      "白く細かいフケが出やすい状態です",
+      "毛穴のまわりに、乾いた角質が目立ちます" ] },
+  { id:"hari", name:"4. 髪の太さ",
+    sub:"日本人女性の平均は約0.07〜0.08mm。年齢とともに細くなりやすいところです。",
     tx:[
-      "全体にしっかりした太さ。根元から立ち上がる",
-      "平均的な太さ。気になる細さはなし",
-      "ところどころに細い毛・短い毛が混じる",
-      "細い毛が目立ち、トップがつぶれやすい",
-      "細い毛が多く、育てるケアの始めどき" ] },
-  { id:"vol", name:"6. ボリューム（毛の密度）",
-    sub:"理想は、1つの毛穴から2〜3本の毛が生えている状態です。",
+      "しっかりした太さです",
+      "平均的な太さです",
+      "少し細い毛が混じっています",
+      "細い毛が目立ち、トップがつぶれやすい状態です",
+      "細くなっている毛が多く見えます" ] },
+  { id:"vol", name:"5. 1つの毛穴から出ている本数",
+    sub:"理想は、1つの毛穴から2〜3本の毛が出ている状態です。",
     tx:[
-      "1穴2〜3本が多く、地肌がほぼ見えない",
-      "1穴2本が中心。分け目は気にならない",
-      "1穴1〜2本が混在。分け目がやや広く感じる",
-      "1穴1本が目立ち、分け目・つむじが透けやすい",
-      "毛の生えていない毛穴も。じっくり育てたい状態" ] },
+      "2〜3本出ている毛穴が多いです",
+      "2本の毛穴が中心です",
+      "1〜2本しか出ていない毛穴が混じっています",
+      "1本だけの毛穴が増えています",
+      "1本だけの毛穴が目立ちます" ] },
 ];
 
 // ============ イラスト生成（レベル1=最良〜5=ケア時） ============
@@ -217,7 +217,7 @@ function illVol(lv){
   return svgWrap(out, SCALPS[lv<=2?0:1]);
 }
 var ILL = { color:illColor, pore:illPore, sebum:illSebum, dry:illDry, hari:illHari, vol:illVol };
-var LVTAG = ["とても良い","良い","ふつう","ケアしたい","しっかりケア"];
+var LVTAG = ["すこやか","","まずまず","","ここが伸びしろ"];
 
 // ============ 描画 ============
 var KEY = "litalab_scalp_chart_v1";
