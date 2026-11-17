@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lita-lab メニュー表</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#fbf8f4;--rose:#c8848c;--deep:#96505f;--pale:#f5e8e9;--gold:#b8923a;--ink:#3a3236;--muted:#756a6d;--line:#e8dcd8}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN",sans-serif;font-size:17px;line-height:1.7}
+  header{text-align:center;padding:40px 18px 26px;background:linear-gradient(145deg,#fff,#f8edef 55%,#efe2df)}
+  .en{font-family:Georgia,serif;font-style:italic;color:var(--gold);letter-spacing:.25em;font-size:14px}
+  h1{font-family:"Shippori Mincho",serif;font-weight:700;font-size:30px;margin:6px 0 8px;letter-spacing:.08em}
+  .lead{color:var(--muted);margin:0 auto;max-width:640px;font-size:15px}
+  nav{position:sticky;top:0;z-index:5;background:rgba(251,248,244,.96);border-bottom:1px solid var(--line);padding:10px 12px;display:flex;gap:8px;overflow-x:auto}
+  nav button{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 16px;font-size:15px;color:var(--ink);cursor:pointer}
+  nav button.on{background:var(--deep);border-color:var(--deep);color:#fff}
+  main{max-width:860px;margin:0 auto;padding:20px 16px 50px}
+  section.cat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 22px;margin:0 0 18px}
+  section.cat[hidden]{display:none}
+  h2{font-family:"Shippori Mincho",serif;font-size:23px;color:var(--deep);margin:0 0 4px}
+  .about{font-size:14.5px;color:var(--muted);margin:0 0 12px}
+  .row{display:grid;grid-template-columns:1fr auto;gap:4px 14px;padding:12px 0;border-top:1px solid #f0e6e3}
+  .row:first-of-type{border-top:none}
+  .nm{font-weight:700}
+  .pr{font-weight:700;color:var(--deep);white-space:nowrap;text-align:right}
+  .pr small{display:block;font-weight:400;color:var(--muted);font-size:12.5px}
+  .ds{grid-column:1/-1;font-size:14.5px;color:#5f5558}
+  .tm{color:var(--muted);font-size:13.5px;font-weight:400;margin-left:6px}
+  .note{background:#fff8e8;border-left:4px solid var(--gold);border-radius:0 10px 10px 0;padding:10px 14px;font-size:14px;margin:12px 0 0}
+  footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px;line-height:1.8}
+  @page{size:A4 portrait;margin:14mm 12mm 12mm 20mm}
+  @media print{
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    body{background:#fff;font-size:11pt}
+    nav{display:none}
+    header{padding:4mm 0 5mm;background:none}
+    h1{font-size:22pt}.en{font-size:10pt}.lead{font-size:10.5pt;max-width:none}
+    main{max-width:none;padding:0}
+    section.cat,section.cat[hidden]{display:block!important;border-radius:3mm;padding:4mm 5mm;margin:0 0 4mm;break-inside:auto}
+    h2{font-size:15pt;break-after:avoid}.about{font-size:10pt}
+    .row{padding:2mm 0;break-inside:avoid}
+    .pr small{font-size:9pt}.ds{font-size:10pt}.tm{font-size:9.5pt}
+    .note{font-size:10pt}
+    footer{font-size:9pt;padding:2mm 0 0}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="en">Lita-lab Menu</div>
+  <h1>メニューと料金</h1>
+  <p class="lead">すべて税込です。カウンセリングで頭皮と髪の状態を伺ってから、その日の内容を一緒に決めます。</p>
+</header>
+<nav id="nav"></nav>
+<main id="menu"></main>
+<footer>料金は2026年11月17日時点のものです（bionlyの登録内容より）。<br>所要時間は目安です。髪の長さ・量によって変わります。</footer>
+
+<script>
+// 正本＝bionlyの「施術メニュー一覧」（WEB予約に出しているもの）。docs/materials/bionly/bionly_施術メニュー一覧_2026-11-17.csv
+// 金額を変えるときは、bionlyを先に直してから、ここをそろえる。
+const MENU=[
+ {c:'カット',about:'カットには、シャンプーとブローが含まれています。',items:[
+  ['カット',5500,60,''],
+  ['カット＋ヘッドスパ（15分）',8800,90,''],
+  ['カット＋ヘッドスパ（25分）',11000,90,''],
+  ['前髪カット',1100,10,'前回の施術から3ヶ月以内の方'],
+  ['チャイルドカット',3300,60,'小学生まで・シャンプーなし'],
+ ]},
+ {c:'カラー・ヘナ',about:'染める前に「カラーでかぶれたことはありますか」を必ず伺います。薬剤はジアミンを含むもの・含まないものから、状態に合わせて一緒に選びます。カラーのあとは、残った薬剤を取る処置までが施術です。',items:[
+  ['カラーリタッチ＋シャンプーブロー',9350,90,'根元から3cm以内を染めます（全種類のカラーから選べます）'],
+  ['カラーリタッチ＋カット',11550,120,''],
+  ['カラーリタッチ＋シャンプーブロー＋ヘッドスパ',11550,120,''],
+  ['カラーリタッチ＋カット＋ヘッドスパ',14850,150,''],
+  ['フルカラー（リタッチに追加）',2200,30,'3cmを超えるときは、リタッチにこちらを追加します'],
+  ['ヘナ＋シャンプーブロー',9350,90,'1回染め（オレンジ系）'],
+  ['ヘナ＋シャンプーブロー＋ヘッドスパ',12650,120,''],
+  ['ヘナ＋カット＋ヘッドスパ',14850,150,''],
+  ['ダブルヘナ＋シャンプーブロー',11550,120,'インディゴを重ねる2回染め（茶〜黒系）'],
+  ['ダブルヘナ＋シャンプーブロー＋ヘッドスパ',14850,150,''],
+  ['ダブルヘナ＋カット＋ヘッドスパ',17050,180,''],
+  ['ホイルカラー（追加）',550,null,'カットなしのときは、シャンプーブローと一緒に'],
+  ['眉カラー',1100,20,''],
+ ]},
+ {c:'ヘッドスパ',about:'頭皮の状態を見ながら、手でほぐしていきます。お湯は、その日の状態に合わせて重曹かクエン酸を入れたマイクロバブルのお湯です。',items:[
+  ['ヘッドスパ（15分）＋シャンプーブロー',6600,60,''],
+  ['ヘッドスパ（25分）＋シャンプーブロー',8800,60,''],
+  ['頭皮・毛髪カウンセリング',2200,20,'マイクロスコープで頭皮を一緒に見ます'],
+ ]},
+ {c:'頭皮のエイジングケア',about:'エクソソームを配合した美容液を、エアバリで頭皮に届けます。',items:[
+  ['エクソソーム頭皮エイジングケア（単品）',13200,60,'カウンセリング → シャンプー → エクソソーム → ドライ（ヘッドスパは入りません）'],
+  ['エクソソーム頭皮エイジングケア（追加）',4400,15,'いつもの施術に、エクソソームだけを足します'],
+  ['MOTONIMO',16500,90,''],
+ ]},
+ {c:'トリートメント',about:'カットがない日は、シャンプーブローと一緒にお選びください。',items:[
+  ['シルクトリートメント',4400,10,'4種の美容成分を内側・外側からケアし、シルクのような艶のある手触りへ'],
+  ['ボンド',3300,10,''],
+  ['トリートメントヘナ',3850,40,''],
+  ['泡クレンジング',3300,10,''],
+  ['ヘマチンケア',3300,null,''],
+  ['ホホバオイルトリートメント',3300,10,''],
+  ['純度100%ハニートリートメント',3300,20,''],
+  ['黒蜜トリートメント',3300,20,''],
+  ['薬剤処置',1100,null,''],
+ ]},
+ {c:'パーマ・コテカール',about:'カットには、シャンプーとブローが含まれています。',items:[
+  ['パーマ＋カット',16500,150,''],
+  ['パーマ＋カット＋ヘッドスパ',19800,150,''],
+  ['パーマ＋カット＋カラー＋ヘッドスパ',28050,210,''],
+  ['コテカール＋カット',19800,180,'朝のお手入れが楽になるパーマです'],
+  ['コテカール＋カット＋ヘッドスパ',22550,180,''],
+  ['コテカール＋カット＋カラー＋ヘッドスパ',31350,240,''],
+  ['前髪パーマ',3850,40,'カットなしのときは、シャンプーブローと一緒に'],
+ ]},
+ {c:'ストレート',about:'カットには、シャンプーとブローが含まれています。',items:[
+  ['ストレート＋カット',19800,180,''],
+  ['ストレート＋カット＋ヘッドスパ',23100,180,''],
+  ['ストレート＋カット＋カラー',28050,240,''],
+  ['ストレート＆コテカール＋カット',24200,180,''],
+  ['ストレート＆コテカール＋カット＋カラー',32450,240,''],
+  ['前髪ストレート',3850,40,'カットなしのときは、シャンプーブローと一緒に'],
+ ]},
+ {c:'そのほか',about:'',items:[
+  ['シャンプーブロー',3300,45,''],
+  ['セット',5500,60,''],
+  ['セット（ハーフアップ・巻き髪・ストレート）',3850,45,''],
+  ['眉カット',1100,10,''],
+  ['インナースキャンセラピー 50分',4620,50,''],
+  ['インナースキャンセラピー 80分',8140,80,''],
+ ]},
+];
+const yen=n=>'¥'+n.toLocaleString('ja-JP');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const main=document.getElementById('menu'),nav=document.getElementById('nav');
+main.innerHTML=MENU.map((g,i)=>`<section class="cat" data-i="${i}"><h2>${esc(g.c)}</h2>${g.about?`<p class="about">${esc(g.about)}</p>`:''}${g.items.map(([n,p,t,d])=>`<div class="row"><div class="nm">${esc(n)}${t?`<span class="tm">約${t}分</span>`:''}</div><div class="pr">${yen(p)}<small>税込</small></div>${d?`<div class="ds">${esc(d)}</div>`:''}</div>`).join('')}</section>`).join('');
+const btns=[['すべて',-1]].concat(MENU.map((g,i)=>[g.c,i]));
+nav.innerHTML=btns.map(([t,i])=>`<button data-i="${i}"${i===-1?' class="on"':''}>${esc(t)}</button>`).join('');
+nav.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const k=+b.dataset.i;
+  nav.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+  main.querySelectorAll('section.cat').forEach(s=>s.hidden=!(k===-1||+s.dataset.i===k));window.scrollTo({top:0});});
+</script>
+</body>
+</html>
