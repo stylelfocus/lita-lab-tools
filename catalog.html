@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Lita-labのおうちケア商品を、お悩み・仕上がり・使い方から選べる商品カタログです。">
+  <title>Lita-lab｜おうちケア商品カタログ</title>
+  <style>
+    :root{
+      --paper:#fbf8f4;--white:#fff;--rose:#c8848c;--rose-deep:#96505f;
+      --rose-pale:#f5e8e9;--gold:#b8923a;--gold-pale:#f3e0ae;
+      --ink:#3a3236;--muted:#756a6d;--line:#e8dcd8;--sage:#68705b;
+      --shadow:0 14px 42px rgba(82,54,61,.09);--serif:"Noto Serif JP","Yu Mincho",YuMincho,serif;
+      --sans:"Noto Sans JP","Hiragino Kaku Gothic ProN",sans-serif;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:16px;line-height:1.8}
+    button,a{font:inherit}
+    img{display:block;max-width:100%}
+    .topbar{position:sticky;top:0;z-index:50;background:rgba(251,248,244,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+    .topbar-inner{max-width:1120px;margin:auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{font-size:14px;letter-spacing:.18em;color:var(--rose-deep);font-weight:700;white-space:nowrap}
+    .jump{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .jump a{text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:999px;background:#fff;padding:6px 13px;font-family:var(--sans);font-size:13px}
+    .jump a:last-child{background:var(--rose-deep);border-color:var(--rose-deep);color:#fff}
+    .hero{position:relative;overflow:hidden;padding:70px 22px 62px;background:linear-gradient(145deg,#fff 0%,#f8edef 52%,#efe2df 100%)}
+    .hero:before,.hero:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(184,146,58,.25)}
+    .hero:before{width:360px;height:360px;right:-120px;top:-170px}.hero:after{width:220px;height:220px;left:-90px;bottom:-130px}
+    .hero-inner{position:relative;max-width:920px;margin:auto;text-align:center}
+    .eyebrow{font-family:Georgia,serif;font-style:italic;color:var(--gold);letter-spacing:.28em;font-size:14px}
+    h1{margin:10px 0 14px;font-weight:500;letter-spacing:.09em;font-size:clamp(30px,5vw,48px);line-height:1.35}
+    h1 em{font-style:normal;color:var(--rose-deep)}
+    .lead{max-width:680px;margin:0 auto;color:#655b5e;font-size:clamp(16px,2vw,19px)}
+    .hero-note{display:inline-block;margin-top:24px;padding:8px 16px;border-left:2px solid var(--gold);border-right:2px solid var(--gold);font-family:var(--sans);font-size:13px;color:var(--muted)}
+    main{max-width:1120px;margin:auto;padding:0 22px 80px}
+    .intro{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:-26px auto 54px;position:relative}
+    .intro-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:20px;box-shadow:var(--shadow)}
+    .intro-card b{display:block;color:var(--rose-deep);font-size:17px;margin-bottom:4px}.intro-card span{font-family:var(--sans);font-size:13px;color:var(--muted)}
+    .section-head{margin:64px 0 20px;text-align:center}
+    .section-head .en{font-family:Georgia,serif;font-style:italic;color:var(--gold);letter-spacing:.22em;font-size:13px}
+    h2{font-weight:500;font-size:clamp(25px,4vw,35px);margin:3px 0 8px;letter-spacing:.08em}
+    .section-head p{margin:0;color:var(--muted)}
+    .filter-shell{position:sticky;top:57px;z-index:40;margin-bottom:26px;padding:12px;background:rgba(251,248,244,.96);border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 24px rgba(82,54,61,.06)}
+    .filters{display:flex;gap:8px;align-items:center;overflow:auto;padding-bottom:2px;scrollbar-width:thin}
+    .filters button{flex:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:9px 15px;cursor:pointer;font-family:var(--sans);font-size:14px}
+    .filters button.on{background:var(--rose-deep);border-color:var(--rose-deep);color:#fff}
+    #count{margin-left:auto;padding:0 8px;white-space:nowrap;color:var(--muted);font:13px var(--sans)}
+    .catalog{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+    .product{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;scroll-margin-top:150px}
+    .product[hidden]{display:none}
+    .product-top{display:grid;grid-template-columns:180px 1fr;min-height:250px}
+    .photo{background:linear-gradient(145deg,#f8f0ed,#eadbd8);padding:14px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .photo img{width:100%;max-height:222px;object-fit:contain;border-radius:12px;background:#fff;box-shadow:0 7px 20px rgba(45,30,34,.13)}
+    .photo img.product-crop{height:222px;object-fit:cover;transform:scale(1.45)}
+    .photo-grid{width:100%;height:222px;display:grid;grid-template-rows:1fr 1fr;gap:8px}
+    .photo-grid img{height:107px;max-height:none;object-fit:contain}
+    .placeholder{width:100%;aspect-ratio:4/5;border:1px solid rgba(150,80,95,.22);border-radius:12px;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;color:var(--rose-deep);background:rgba(255,255,255,.58);font-family:Georgia,serif;letter-spacing:.08em}
+    .summary{padding:20px 20px 18px}.badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+    .badge{font:11px var(--sans);padding:3px 8px;border-radius:999px;background:#f0f2ec;color:#59604e}
+    .badge.channel{background:var(--rose-pale);color:var(--rose-deep)}
+    h3{font-size:20px;line-height:1.5;margin:0 0 5px;color:var(--ink)}
+    .sub{font:12px/1.6 var(--sans);color:var(--muted);margin-bottom:12px}
+    .fit{background:#fcf8f5;border-left:3px solid var(--gold);padding:10px 12px;margin:0 0 12px;font-size:14px;line-height:1.7}
+    .fit b{color:var(--rose-deep)}
+    .result{font-size:15px;margin:0;color:#554b4e}.result b{color:var(--rose-deep);font-weight:600}
+    .price{width:100%;border-collapse:collapse;margin-top:14px;font-family:var(--sans);font-size:13px}
+    .price th{color:var(--muted);font-weight:400;text-align:left;font-size:11px;border-bottom:1px solid var(--line);padding:5px 2px}
+    .price td{padding:6px 2px;border-bottom:1px solid #f0e8e4}.price td:last-child{text-align:right;color:var(--rose-deep);font-weight:700;white-space:nowrap}
+    .details{border-top:1px solid var(--line);background:#fdfbf9;padding:17px 20px 20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;flex:1}
+    .detail h4{font:600 12px var(--sans);letter-spacing:.12em;color:var(--gold);margin:0 0 6px;text-transform:uppercase}
+    .detail p,.detail ul{font-size:13px;line-height:1.72;color:#5f5558;margin:0}.detail ul{padding-left:1.2em}
+    .note{grid-column:1/-1;font:11px/1.6 var(--sans);color:#8d8184}
+    .sets{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .set-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:20px;padding:25px 22px 22px;box-shadow:var(--shadow);overflow:hidden}
+    .set-card:before{content:attr(data-no);position:absolute;right:12px;top:-20px;font:italic 72px Georgia,serif;color:#f4e9e7}
+    .set-label{position:relative;color:var(--gold);font:italic 13px Georgia,serif;letter-spacing:.14em}
+    .set-card h3{position:relative;font-size:21px;margin:5px 0 8px}.set-for{position:relative;color:var(--rose-deep);font-size:14px;margin:0 0 14px}
+    .set-items{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+    .set-items li{padding:8px 0;border-bottom:1px solid var(--line);font:13px/1.55 var(--sans);display:flex;gap:8px}.set-items li:before{content:"＋";color:var(--gold)}
+    .set-result{margin:14px 0 0;padding:12px;background:var(--rose-pale);color:#68474f;font-size:14px;border-radius:10px}
+    .set-price{font:700 17px var(--sans);color:var(--rose-deep);margin:12px 0 0}.set-price small{font-size:11px;color:var(--muted);font-weight:400}
+    .consult{margin-top:66px;background:var(--rose-deep);color:#fff;border-radius:24px;padding:38px;text-align:center;position:relative;overflow:hidden}
+    .consult:after{content:"Lita-lab";position:absolute;right:-10px;bottom:-32px;font:italic 86px Georgia,serif;color:rgba(255,255,255,.06)}
+    .consult .en{color:var(--gold-pale);font:italic 14px Georgia,serif;letter-spacing:.2em}.consult h2{margin:5px 0 10px}.consult p{margin:0;color:#f7e9ec}
+    .contact{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}.contact a{position:relative;z-index:1;text-decoration:none;border-radius:999px;padding:10px 18px;background:#fff;color:var(--rose-deep);font-family:var(--sans);font-size:14px;font-weight:700}.contact a.alt{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.55)}
+    footer{text-align:center;padding:28px 20px 44px;color:var(--muted);font:12px/1.8 var(--sans)}
+    @media(max-width:900px){.catalog{grid-template-columns:1fr}.sets{grid-template-columns:1fr 1fr}.product-top{grid-template-columns:200px 1fr}}
+    @media(max-width:650px){body{font-size:15px}.topbar-inner{padding:8px 12px}.brand{display:none}.jump{width:100%;justify-content:center}.hero{padding:50px 18px 52px}.intro{grid-template-columns:1fr;margin-top:-18px;gap:9px}.intro-card{padding:14px 16px}.filter-shell{top:53px;margin-left:-10px;margin-right:-10px}.catalog,.sets{grid-template-columns:1fr}.product-top{grid-template-columns:128px 1fr;min-height:0}.photo{padding:9px}.photo img{max-height:200px}.photo img.product-crop{height:200px}.photo-grid{height:200px;gap:6px}.photo-grid img{height:97px;max-height:none}.summary{padding:16px 14px}.summary h3{font-size:18px}.details{grid-template-columns:1fr;padding:15px}.note{grid-column:auto}.consult{padding:30px 18px}.section-head{margin-top:50px}}
+    /* 2026-11-17 ファイル用（A4たて・とじ代20mm・本文11pt以上／表10pt以上／注記9pt以上） */
+    @page{size:A4 portrait;margin:14mm 12mm 12mm 20mm}
+    @media print{
+      *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+      body{font-size:11pt;background:#fff}
+      .topbar,.filter-shell,.contact{display:none!important}
+      .hero{padding:8mm 0 6mm}.hero:before,.hero:after{display:none}
+      .eyebrow{font-size:10pt}h1{font-size:22pt;margin:2mm 0 3mm}.lead{font-size:11pt;max-width:none}.hero-note{font-size:10.5pt;margin-top:4mm}
+      main{max-width:none;padding:0}
+      .intro{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4mm;margin:4mm 0 6mm}
+      .intro-card{padding:3mm 4mm;box-shadow:none}.intro-card b{font-size:11pt}.intro-card span{font-size:10pt}
+      .section-head{margin:0 0 4mm}.section-head .en{font-size:9.5pt}h2{font-size:17pt}.section-head p{font-size:10.5pt}
+      .catalog{display:block}
+      .product,.product[hidden]{display:flex!important;break-inside:avoid;page-break-inside:avoid;margin:0 0 5mm;box-shadow:none;border-radius:3mm}
+      .product-top{grid-template-columns:44mm 1fr;min-height:0}
+      .photo{padding:3mm}.photo img{max-height:52mm;box-shadow:none;border-radius:2mm}
+      .photo img.product-crop{height:52mm}.photo-grid{height:52mm;gap:2mm}.photo-grid img{height:25mm}
+      .summary{padding:4mm 5mm 4mm}.badges{margin-bottom:1.5mm}.badge{font-size:9pt;padding:.5mm 2.5mm}
+      h3{font-size:14pt;margin:0 0 .5mm}.sub{font-size:9.5pt;margin-bottom:2mm}
+      .fit{font-size:11pt;line-height:1.6;padding:2mm 3mm;margin:0 0 2mm}.result{font-size:11pt;line-height:1.6}
+      .price{font-size:10.5pt;margin-top:2.5mm}.price th{font-size:9pt;padding:1mm .5mm}.price td{padding:1.2mm .5mm}
+      .details{padding:3mm 5mm 4mm;gap:5mm}
+      .detail h4{font-size:9pt;margin:0 0 1mm}.detail p,.detail ul{font-size:10pt;line-height:1.6}
+      .note{font-size:9pt}
+      .consult{margin-top:2mm;padding:3.5mm 5mm;border-radius:3mm;break-inside:avoid;background:#96505f!important}.consult:after{display:none}
+      .consult .en{display:none}.consult p{font-size:11pt}
+      footer{font-size:9pt;line-height:1.5;padding:1.5mm 0 0;break-before:avoid;page-break-before:avoid}
+      .consult h2{font-size:14pt;margin:1mm 0 2mm}
+    }
+  </style>
+</head>
+<body>
+  <nav class="topbar" aria-label="ページ内メニュー"><div class="topbar-inner">
+    <div class="brand">HAIR CARE SALON · Lita-lab</div>
+    <div class="jump"><a href="#guide">選び方</a><a href="#products">商品一覧</a><a href="#consult">相談する</a></div>
+  </div></nav>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Lita-lab Home Care Selection</div>
+      <h1>いまの私に合う、<em>おうちケア</em></h1>
+      <p class="lead">成分だけで選ぶのではなく、「いま気になること」と「どうなりたいか」から。頭皮と髪の状態に合わせて、毎日続けやすい一品をご案内します。</p>
+      <div class="hero-note">髪の老化、あきらめない。頭皮から整える予防美容。</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro" id="guide" aria-label="カタログの見方">
+      <div class="intro-card"><b>1. 気になることから</b><span>乾燥、ハリ・コシ、白髪などから絞り込めます。</span></div>
+      <div class="intro-card"><b>2. なりたい仕上がりを見る</b><span>「こんな方に」と「めざせる状態」を最初に確認。</span></div>
+      <div class="intro-card"><b>3. 続け方を相談する</b><span>使い方や組み合わせは、毛髪診断士が一緒に選びます。</span></div>
+    </section>
+
+    <section id="products">
+      <div class="section-head"><div class="en">Product Guide</div><h2>商品をひとつずつ見る</h2><p>価格・容量・主な成分・使い方を、ひと目で。<br>🏬 ご来店時にお渡し　🛒 ネットでも</p></div>
+      <div class="filter-shell"><div class="filters" role="group" aria-label="お悩みで絞り込む">
+        <button class="on" data-filter="all">すべて</button><button data-filter="scalp">頭皮ケア</button><button data-filter="dry">乾燥・パサつき</button><button data-filter="volume">ハリ・コシ</button><button data-filter="gray">白髪まわり</button><button data-filter="style">スタイリング</button><button data-filter="special">スペシャル</button><span id="count" aria-live="polite"></span>
+      </div></div>
+      <div class="catalog" id="catalog"></div>
+    </section>
+
+    <section class="consult" id="consult">
+      <div class="en">Personal Counseling</div><h2>「私にはどれ？」からで大丈夫です。</h2>
+      <p>頭皮と髪の状態、毎日の負担、続けやすさまで伺い、毛髪診断士が一緒に選びます。</p>
+      <div class="contact"><a href="https://line.me/R/ti/p/@eqx7559v" target="_blank" rel="noopener">LINEで相談する</a><a class="alt" href="https://lita-lab.com/shindan/" target="_blank" rel="noopener">頭皮と髪の未来診断</a></div>
+    </section>
+  </main>
+  <footer>表示価格は2026年10月13日時点・すべて税込です。価格・取扱状況は変更になる場合があります。<br>全成分は商品パッケージをご確認ください。肌に異常がある場合や、使用中に異常を感じた場合は使用を中止してください。</footer>
+
+  <script>
+  const products = [
+    {name:'MOTONIMO 01 トル',sub:'髪・頭皮用クレンジングケア',image:'assets/motonimo-01-02.JPG',imagePosition:'18% center',channel:'🏬',tags:['scalp','volume','special'],tagNames:['頭皮環境','3ステップ'],fit:'頭皮と髪に残りやすい汚れをすっきりさせ、土台から整えたい方',result:'次に使うケアがなじみやすい、<b>すっきり軽やかな髪と頭皮</b>へ。',prices:[['MOTONIMO 01','500mL','¥6,050']],ingredients:'髪・頭皮用の洗浄料。全成分は商品パッケージをご確認ください。',use:'髪をお湯で十分にすすぎ、水気をできるだけきる。原液のまま適量を頭皮にしっかりつけ、指の腹で髪全体になじませる。根元から毛先へ手ぐしを通し、15分以上おいてから頭皮に残らないようによくすすぐ。',note:'放置中に乾きやすい場合はキャップ等で包んでください。'},
+    {name:'MOTONIMO 02 アタエル',sub:'髪・頭皮用トリートメント',image:'assets/motonimo-01-02.JPG',imagePosition:'82% center',channel:'🏬',tags:['scalp','dry','volume','special'],tagNames:['ツヤ・うるおい','3ステップ'],fit:'ハリ・コシ不足や乾燥を感じ、髪だけでなく頭皮にも丁寧にうるおいを与えたい方',result:'髪と頭皮をうるおし、<b>ツヤとまとまりのある健やかな髪</b>へ。',prices:[['MOTONIMO 02','500mL','¥6,050']],ingredients:'水、ミネラルオイル、BG、セタノール、DPG、エタノール、γ-ドコサラクトン、ヒアルロン酸Na、加水分解シルク、シアノコバラミン、ヒマワリ種子エキス、没食子酸エピガロカテキン、アラントイン、アーモンド油、チョウジエキス ほか。',use:'01をすすいだ後、水気をできるだけきる。原液のまま適量を頭皮にしっかりつけ、髪全体へ指の腹でなじませる。根元から毛先へ手ぐしを通し、15分以上おいてからよくすすぐ。少量なら洗い流さないケアとしても使えます。'},
+    {name:'MOTONIMO 03 マモル',sub:'髪・頭皮用化粧水',image:'assets/motonimo-03.JPG',channel:'🏬',tags:['scalp','dry','volume','special'],tagNames:['乾燥・紫外線','3ステップ'],fit:'頭皮と髪の乾燥、毛先のパサつき、分け目の紫外線が気になる方',result:'ベタつきを残しにくい保湿ケアで、<b>しなやかで扱いやすい髪と頭皮</b>へ。',prices:[['本体','200mL','¥4,950']],ingredients:'オイル・シリコン・ポリマー不使用。全成分は商品パッケージをご確認ください。',use:'洗髪後は水気をよくきり、頭頂部や分け目を中心に頭皮へ噴霧して指の腹でなじませる。髪の中間から毛先にも軽く湿る程度につけ、約5分おいてから乾かす。朝の乾いた髪と頭皮にも使えます。',note:'MOTONIMO 01・02・03の3本合計は¥17,050です。'},
+    {name:'ヤクジョ 潤髪エイジングケアシャンプー',sub:'ヘマチン配合・アミノ酸系',image:'assets/yakujo-shampoo-official.png',channel:'🏬',tags:['scalp','dry','volume'],tagNames:['乾燥','エイジングケア'],fit:'頭皮の乾燥と髪のパサつきを、毎日のシャンプーから見直したい方',result:'しっとり洗い上げながら頭皮をすこやかに整え、<b>うるおいとハリのある髪</b>へ。',prices:[['ボトル','300mL','¥3,850'],['詰替','500mL','¥5,775']],ingredients:'ヤクジョ®スイ、ヘマチン、アミノ酸系洗浄成分 ほか。全成分は商品パッケージをご確認ください。',use:'予洗い後、2〜3プッシュを泡立て、頭皮をやさしく洗う。泡を髪と頭皮になじませたまま2〜3分おく「泡パック」もおすすめです。その後、よくすすぎます。'},
+    {name:'ヤクジョスイ ローションS',sub:'頭皮・肌用ローション',image:'assets/yakujosui-official.png',channel:'🏬',tags:['scalp','dry'],tagNames:['乾燥・かゆみ','朝洗顔にも'],fit:'頭皮や肌の乾燥が気になり、摩擦を抑えたシンプルなお手入れをしたい方',result:'頭皮や肌にうるおいを与え、<b>すこやかな状態に整えます</b>。',prices:[['ボトル','200mL','¥3,960'],['詰替','400mL','¥5,236']],ingredients:'ミネラルアルカリ還元水。全成分は商品パッケージをご確認ください。',use:'洗髪後の頭皮や乾燥が気になる肌に適量をなじませる。朝は顔全体へたっぷり吹きかけ、やさしくなじませて拭き取れば洗顔代わりにも。化粧水前のブースターとしても使えます。'},
+    {name:'ヤクジョ 潤髪クールシャンプー',sub:'夏のみ・オールインワン',image:'assets/yakujo-cool-official.png',channel:'🏬',tags:['scalp','volume'],tagNames:['ベタつき','におい'],fit:'汗やベタつきが気になり、夏の洗髪を手早くすっきり済ませたい方',result:'頭皮はさっぱり、根元はふんわり、毛先は<b>軽くまとまる仕上がり</b>へ。',prices:[['ボトル','300mL','¥4,290']],ingredients:'全成分は商品パッケージをご確認ください。',use:'髪と頭皮をよく濡らし、適量を泡立てて洗い、よくすすぐ。トリートメント不要の設計。',note:'夏のみのお取り扱いです。商品一覧には年間を通して掲載しています。'},
+    {name:'R-21 シャンプー',sub:'21種の植物美容成分・ヘマチン配合',image:'assets/r21-litalab.JPG',channel:'🛒',tags:['scalp','dry','volume'],tagNames:['頭皮ケア','ハリ・コシ'],fit:'頭皮の乾燥や髪の細さが気になり、毎日の洗髪からすこやかに整えたい方',result:'頭皮と髪のうるおいを守って洗い、<b>根元からハリ・コシのある髪</b>へ。',prices:[['ボトル','270mL','¥2,178'],['ポンプ','500mL','¥3,520'],['詰替','950mL','¥7,150']],ingredients:'21種の植物美容エキス／オイル、ヘマチン、発酵プラセンタエキス、発酵オリーブ葉エキス、コメ発酵液、18種類のアミノ酸系成分 ほか。',use:'髪と頭皮を十分に濡らし、適量を泡立てる。指の腹で頭皮をマッサージするように洗い、泡を髪全体へ行き渡らせてからよくすすぎます。'},
+    {name:'R-21 トリートメント',sub:'21種の植物美容成分・ヘマチン配合',image:'assets/r21-litalab.JPG',channel:'🛒',tags:['dry','volume'],tagNames:['パサつき','ハリ・コシ'],fit:'毛先のパサつきや指どおり、髪のハリ・コシ不足が気になる方',result:'髪にうるおいを補い、<b>しなやかでまとまりのある仕上がり</b>へ。',prices:[['チューブ','250g','¥2,728'],['ポンプ','500g','¥4,180'],['詰替','950g','¥8,470']],ingredients:'21種の植物美容エキス／オイル、ヘマチン、3種の発酵成分、アミノ酸系成分 ほか。',use:'シャンプー後に水気をきり、適量を髪の中間から毛先へなじませる。少しおいてから、ぬるつきが残りすぎないようにすすぎます。',note:'頭皮につけすぎず、ダメージや乾燥が気になる部分を中心になじませてください。'},
+    {name:'ヤクジョ 潤髪トリートメントS',sub:'インバス＆アウトバス兼用',image:'assets/yakujo-treatment-official.png',channel:'🏬',tags:['dry'],tagNames:['乾燥','3通りに使える'],fit:'毛先が広がりやすく、1本でお風呂の中から仕上げまで整えたい方',result:'熱や乾燥で乱れやすい髪を整え、<b>しっとりなめらかな指どおり</b>へ。',prices:[['ボトル','200g','¥4,180']],ingredients:'水（ミネラルアルカリ還元水）、マレイン酸、ナノ化CMC、ナノ化エルカラクトン（γ-ドコサラクトン）、ヒト型セラミド、加水分解ケラチン、シア脂、ハチミツ ほか。',use:'①お風呂の中：シャンプー後の毛先へ3〜5プッシュなじませてすすぐ。②ドライヤー前：タオルドライ後、1〜3プッシュを髪全体へなじませて乾かす。③仕上げ：ごく少量を手のひらに広げ、仕上げのヘアミルク代わりに毛先へ。',note:'使用量は髪の長さ・量に合わせて調整してください。'},
+    {name:'KJ プレシャスヘマチン',sub:'髪・頭皮用トリートメントブースター',image:'assets/hematin-litalab.jpeg',channel:'🛒',tags:['scalp','dry','volume'],tagNames:['頭皮ケア','ハリ・コシ'],fit:'カラー後の髪、ハリ・コシ不足、髪や頭皮の乾燥が気になる方',result:'髪と地肌を一緒にケアし、<b>しなやかで艶やかな髪</b>を保ちます。',prices:[['ボトル','150mL','¥3,800']],ingredients:'水、BG、グリセリン、ヘマチン、メチルアミノ酸Na、水酸化K、（アクリレーツ／アクリル酸アルキル(C10-30)）クロスポリマー、エタノール、フェノキシエタノール。',use:'シャンプー後、髪全体に5プッシュを目安になじませ、地肌にもやさしくなじませます。その上からトリートメントをつけて流します。'},
+    {name:'INCA OIL オーガニックホホバ',sub:'頭皮・髪・顔・全身',image:'assets/inca-litalab.jpg',channel:'🛒',tags:['scalp','dry'],tagNames:['乾燥','全身保湿'],fit:'一本で頭皮から全身まで、シンプルに乾燥ケアしたい方',result:'肌や髪になじみ、乾燥によるパサつきを防いで<b>しなやかな状態</b>へ。',prices:[['ボトル','100mL','¥3,300'],['ボトル','1000mL','¥14,300']],ingredients:'ゴールデンホホバ種子油。全成分は商品パッケージをご確認ください。',use:'シャンプー1プッシュに3プッシュ混ぜて泡パック。乾いた頭皮、顔は化粧水前に1滴、全身の保湿にも。'},
+    {name:'ザ・モイ バーム アンビエントデュウ',sub:'髪・ハンド・ボディに',image:'assets/moii-balm-official.png',channel:'🛒',tags:['dry','style'],tagNames:['束感','全身保湿'],fit:'毛先の乾燥を抑えながら、しっとりした束感をつくりたい方',result:'ウェットな束感や重めのスタイルを、<b>うるおいのある質感</b>で。',prices:[['バーム','37g','¥3,520']],ingredients:'全成分は商品パッケージをご確認ください。',use:'パール1粒分（直径約1cm）を手のひらで温め、毛先中心になじませる。手に残った分はハンドやボディへ。'},
+    {name:'オーガニック琉球ヘナ',sub:'沖縄県産ヘナ',image:'assets/hena_organic.jpg',channel:'🛒',tags:['gray','special'],tagNames:['オレンジ系','自然派'],fit:'白髪を明るいオレンジ系になじませ、植物だけでシンプルに染めたい方',result:'白髪にあたたかみのある色を重ねながら、<b>ハリとしなやかさのある髪</b>へ。',prices:[['オーガニック琉球ヘナ','100g','¥3,300']],ingredients:'ヘナ（Lawsonia inermis）。',use:'粉をお湯で溶き、髪へ均一に塗布して所定時間おきます。その後、お湯でよく流します。詳しい時間はスタッフがご案内します。',note:'植物由来でも体質に合わない場合があります。使用前の確認方法はスタッフへご相談ください。'},
+    {name:'琉球藍',sub:'沖縄県産の藍',image:'assets/hena_ai.jpg',channel:'🛒',tags:['gray','special'],tagNames:['藍色調整','自然派'],fit:'ヘナの赤みを落ち着かせ、深みのある色味へ調整したい方',result:'ヘナと組み合わせて、<b>落ち着きのある自然な色合い</b>へ。',prices:[['琉球藍','100g','¥8,080']],ingredients:'リュウキュウアイ（Strobilanthes cusia）。',use:'単品またはヘナと組み合わせて使用します。配合・放置時間は髪の状態や希望色により異なるため、スタッフがご案内します。',note:'植物由来でも体質に合わない場合があります。使用前の確認方法はスタッフへご相談ください。'},
+    {name:'プレミアムMIX キャラメルブラウン',sub:'琉球ヘナ＋琉球藍',image:'assets/hena_caramel.jpg',channel:'🛒',tags:['gray','special'],tagNames:['やわらかなブラウン','植物由来'],fit:'白髪をやわらかく明るめのブラウン系になじませたい方',result:'白髪をやわらかなブラウン系になじませ、<b>自然で軽やかな印象</b>へ。',prices:[['キャラメルブラウン','100g','¥5,880']],ingredients:'琉球ヘナ、琉球藍。',use:'粉をお湯で溶き、髪へ均一に塗布して所定時間おきます。その後、お湯でよく流します。詳しい時間はスタッフがご案内します。',note:'植物由来でも体質に合わない場合があります。使用前の確認方法はスタッフへご相談ください。'},
+    {name:'プレミアムMIX ナチュラルブラウン',sub:'琉球ヘナ＋琉球藍',image:'assets/hena_natural.jpg',channel:'🛒',tags:['gray','special'],tagNames:['自然なブラウン','植物由来'],fit:'白髪を自然なブラウン系になじませたい方',result:'白髪を自然なブラウン系になじませ、<b>落ち着いた印象</b>へ。',prices:[['ナチュラルブラウン','100g','¥5,880']],ingredients:'琉球ヘナ、琉球藍。',use:'粉をお湯で溶き、髪へ均一に塗布して所定時間おきます。その後、お湯でよく流します。詳しい時間はスタッフがご案内します。',note:'植物由来でも体質に合わない場合があります。使用前の確認方法はスタッフへご相談ください。'},
+    {name:'プレミアムMIX ダークブラウン',sub:'琉球ヘナ＋琉球藍',image:'assets/hena_dark.jpg',channel:'🛒',tags:['gray','special'],tagNames:['深いブラウン','植物由来'],fit:'白髪をより落ち着いた、深みのあるブラウン系になじませたい方',result:'白髪を深い色合いに整え、<b>落ち着きのある上品な印象</b>へ。',prices:[['ダークブラウン','100g','¥7,370']],ingredients:'琉球ヘナ、琉球藍。',use:'粉をお湯で溶き、髪へ均一に塗布して所定時間おきます。その後、お湯でよく流します。詳しい時間はスタッフがご案内します。',note:'植物由来でも体質に合わない場合があります。使用前の確認方法はスタッフへご相談ください。'},
+    {name:'ポイントコンシーラー',sub:'アリミノ／全1色／10mL',image:'assets/point-concealer-official.jpg',channel:'🏬',tags:['gray','style'],tagNames:['白髪','お出かけ前'],fit:'次のカラーまでの間、生え際や分け目だけを手早く整えたい方',result:'気になる部分にさっとなじみ、<b>お出かけ前の身支度を簡単に</b>。',prices:[['全1色','10mL','¥1,980']],ingredients:'成分の詳細は商品パッケージをご確認ください。',use:'乾いた髪の気になる部分へ軽くのせる。シャンプーで落とせます。'},
+    {name:'SINSO REPAIR エクソソーム ステムセル',sub:'顔・頭皮用美容液',image:'assets/sinso-store.jpg',channel:'🛒',tags:['special'],tagNames:['肌','頭皮にも'],fit:'サロンでのお肌ケア後も、家で丁寧なお手入れを続けたい方',result:'年齢に応じたお手入れで、<b>うるおいのある肌</b>を保ちます。',prices:[['エクソソーム ステムセル','35mL','¥8,250']],ingredients:'全成分は商品パッケージをご確認ください。',use:'もともとは美顔器に入れて霧にして使う美容液です。ご自宅では、適量を手に取ってそのままお顔になじませてください。頭皮にもお使いいただけます（Lita-labではそう使っています）。'},
+    {name:'エレクトロン インパクト',sub:'電子×近赤外線・低温ドライヤー',image:'assets/electron-impact-product.JPG',channel:'🏬',tags:['dry','special'],tagNames:['ツヤ・しなやかさ','髪・肌モード'],fit:'乾かす時間も髪と地肌をいたわる習慣に変え、熱による負担を抑えたい方',result:'低温風で乾かしながら、<b>うるおい・ツヤ・しなやかさのある仕上がり</b>へ。',prices:[['本体','369g（コード除く）','¥28,600'],['交換用フィルター','—','¥3,850']],ingredients:'美容機器のため化粧品成分はありません。CRE機能（電子×近赤外線×コラーゲン）搭載。HAIRモード約76℃・700W、3mコード、折りたたみ式。',use:'HAIR：タオルドライ後、まず根元を約8割乾かす。本体は振らず髪から約5cm離し、指を通しながら根元から毛先へ。仕上げは上から約45°の角度で風を当てます。SKIN：顔から約5cm離し、デコルテ→首・あご→頬へ、ゆっくり温風を当てます。',note:'1年保証。仕上がりには個人差があります。詳しい操作と注意事項は取扱説明書をご確認ください。'},
+    {name:'エレクトロン キャップ',sub:'電子パウダー加工・FREEサイズ',image:'assets/electron-cap-official.png',channel:'🏬',tags:['dry','special'],tagNames:['摩擦対策','5通りに使える'],fit:'寝返りによる髪の乱れや、お風呂時間の集中ケアを手軽に取り入れたい方',result:'やわらかなマイクロファイバーで髪を包み、<b>摩擦を抑えて扱いやすい髪</b>へ。',prices:[['FREEサイズ','1点','¥9,790']],ingredients:'ナイロン68%、ポリウレタン32%。電子パウダーをプリントした、伸縮性のあるマイクロファイバー素材。',use:'①シャンプーパック：2度目の泡をつけたまま3〜5分。②トリートメントパック：水気をきり、トリートメントをつけて3〜5分。③入浴後のヘアタオル。④乾いた髪のナイトキャップ。⑤洗顔・メイク時のターバン。',note:'40℃以下で洗濯。柔軟剤・漂白剤・タンブル乾燥・アイロン・ドライクリーニングは避け、陰干ししてください。'},
+    {name:'Lita-lab スキャルプブラシ',sub:'Lita-labオリジナル・頭皮ケアブラシ',image:'assets/brush-litalab.jpg',channel:'🛒',tags:['scalp','special'],tagNames:['シャンプー時','日常のほぐし'],fit:'頭皮をほぐす習慣を、シャンプー中も日常も気軽に続けたい方',result:'2通りの使い方で、<b>頭皮を心地よくお手入れ</b>。',prices:[['スキャルプブラシ','1点','¥2,200']],ingredients:'ブラシのため化粧品成分はありません。素材詳細は店頭でご確認ください。',use:'シャンプー時：十分に泡立て、ブラシを頭皮へ垂直に当てて小刻みに動かします。日常の凝りほぐし：乾いた頭皮に当て、こめかみ・耳まわり・後頭部をゆっくり押してほぐします。',note:'髪をこすらず、痛くない力加減で。頭皮に傷や炎症があるときは使用を控えてください。'},
+    {name:'Lita-lab トートバッグ',sub:'Lita-labオリジナル・3カラー・内ポケット付き',image:'assets/tote-litalab.jpg',channel:'🛒',tags:['special'],tagNames:['内ポケット1つ','ネイビー・ブラウン・グレー'],fit:'毎日使いやすく、小物も分けて収納できるバッグをお探しの方',result:'内ポケット1つで小物を分けながら、<b>日常のお出かけをすっきり軽やかに</b>。',prices:[['トートバッグ','1点','¥2,200']],ingredients:'雑貨のため化粧品成分はありません。内ポケット1つ付き。素材・サイズの詳細は店頭でご確認ください。',use:'お好みのカラーを選び、日常のお出かけやサブバッグとしてお使いください。'}
+  ];
+
+  const catalog=document.getElementById('catalog');
+  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function productCard(p,i){
+    const image=p.images?.length?`<div class="photo-grid">${p.images.map((src,index)=>`<img src="${esc(src)}" alt="${esc(p.name)} ${index+1}">`).join('')}</div>`:p.image?`<img${p.imagePosition?' class="product-crop"':''} src="${esc(p.image)}" alt="${esc(p.name)}"${p.imagePosition?` style="object-position:${esc(p.imagePosition)}"`:''}>`:`<div class="placeholder">${esc(p.name)}<br><small>店頭で実物をご覧ください</small></div>`;
+    const rows=p.prices.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join('');
+    const badges=p.tagNames.map(x=>`<span class="badge">${esc(x)}</span>`).join('');
+    return `<article class="product" data-tags="${esc(p.tags.join(' '))}" aria-labelledby="p${i}"><div class="product-top"><div class="photo">${image}</div><div class="summary"><div class="badges"><span class="badge channel">${esc(p.channel)}</span>${badges}</div><h3 id="p${i}">${esc(p.name)}</h3><div class="sub">${esc(p.sub)}</div><div class="fit"><b>こんな方に</b><br>${esc(p.fit)}</div><p class="result">${p.result}</p><table class="price"><thead><tr><th>種類</th><th>量</th><th>価格</th></tr></thead><tbody>${rows}</tbody></table></div></div><div class="details"><div class="detail"><h4>Ingredients · 主な成分</h4><p>${esc(p.ingredients)}</p></div><div class="detail"><h4>How to · 使い方</h4><p>${esc(p.use)}</p></div>${p.note?`<div class="note">※ ${esc(p.note)}</div>`:''}</div></article>`;
+  }
+  catalog.innerHTML=products.map(productCard).join('');
+  const buttons=[...document.querySelectorAll('[data-filter]')];
+  const cards=[...document.querySelectorAll('.product')];
+  function filter(key){let n=0;cards.forEach(card=>{const show=key==='all'||card.dataset.tags.split(' ').includes(key);card.hidden=!show;if(show)n++});document.getElementById('count').textContent=`${n}点`;buttons.forEach(b=>b.classList.toggle('on',b.dataset.filter===key))}
+  buttons.forEach(b=>b.addEventListener('click',()=>filter(b.dataset.filter)));
+  filter('all');
+  </script>
+</body>
+</html>
